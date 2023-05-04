@@ -15,7 +15,7 @@ const HomeScreen = () => {
           <View>
               <AccountCard />
           </View>
-          <View style={{backgroundColor:'#ffff'}}>
+          <View style={{backgroundColor:'#ffff',margin:3,   borderRadius:5,}}>
             <CardBody />
           </View>
         </View>

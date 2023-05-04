@@ -243,6 +243,27 @@ module.exports = StyleSheet.create({
         width: 2,
       }
     },
+    vwtoh: {
+      padding:5, 
+      paddingLeft:18,
+       paddingBottom:4,
+       paddingTop:8,
+       // background:'smokewhite', 
+        margin:10, 
+        width:"45%", 
+        marginTop:0.5,
+        // flex,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        // alignSelf:"center",
+         borderWidth:0.25
+    },
+    titxt:{
+      marginTop:2,
+      fontSize:16,
+      fontWeight:'normal'
+    }
     
 });
 {/* <View>

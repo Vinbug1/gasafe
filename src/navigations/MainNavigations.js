@@ -10,6 +10,12 @@ import NewProduct from '../screens/NewProduct';
 import ForgeetPassword from '../screens/users/ForgetPassword';
 import Verification from '../screens/users/Verification';
 import HomeScreen from '../screens/HomeScreen';
+import DailyTip from '../screens/gasscreen/DailyTip';
+import FilGas from '../screens/gasscreen/FilGas';
+import Gct from '../screens/gasscreen/Gct';
+import Market from '../screens/gasscreen/Market';
+import TopVendor from '../screens/gasscreen/TopVendor';
+import Transactions from '../screens/gasscreen/Transactions';
 
 const Stack = createNativeStackNavigator();
 const MainNavigations = () => {
@@ -62,6 +68,36 @@ const MainNavigations = () => {
          <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="DailyTipScreen"
+            component={DailyTip}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="FilGasScreen"
+            component={FilGas}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="GctScreen"
+            component={Gct}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="MarketScreen"
+            component={Market}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="TopVendorScreen"
+            component={TopVendor}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="TransactionScreen"
+            component={Transactions}
             options={{ headerShown: false }}
        />
       {/* <Stack.Screen />  
