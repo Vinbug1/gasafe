@@ -43,6 +43,14 @@ module.exports = StyleSheet.create({
         borderRadius:5,
         marginTop:35
       },
+        btnlg: {
+        height:50,
+        width:"80%",
+        alignSelf:'center',
+        backgroundColor:"#D12E3F",
+        borderRadius:5,
+        marginTop:35
+      },
       swapimg:{
         height:"80%",
         width:"85%",
@@ -74,7 +82,7 @@ module.exports = StyleSheet.create({
       },
       skipvw:{
           position:'absolute',
-          left:330,
+          right: 55,
            top:80,
       },
       textsm:{
@@ -102,7 +110,7 @@ module.exports = StyleSheet.create({
       },
       sigvw:{
         height:"250%",
-        marginTop: 50, 
+        marginTop: 48, 
         backgroundColor:"#2ED1C0",
         borderTopRightRadius:8,
         borderTopLeftRadius:8,
@@ -188,8 +196,12 @@ module.exports = StyleSheet.create({
       borderRadius: 2,
       marginTop:2
     },
-    root: {padding: 2, minHeight: 300},
-    title: {textAlign: 'center', fontSize: 30,fontWeight:'bold',paddingTop:15},
+    root: {
+      padding: 2, 
+      minHeight: 300
+    },
+    title: {
+      textAlign: 'center', fontSize: 30,fontWeight:'bold',paddingTop:15},
     subtitle: {textAlign: 'center', fontSize: 14,paddingLeft:12},
     codeFieldRoot: {
       marginTop: 20,
@@ -243,27 +255,332 @@ module.exports = StyleSheet.create({
         width: 2,
       }
     },
-    vwtoh: {
-      padding:5, 
-      paddingLeft:18,
-       paddingBottom:4,
-       paddingTop:8,
-       // background:'smokewhite', 
-        margin:10, 
-        width:"45%", 
-        marginTop:0.5,
-        // flex,
+    filgs:{
+        padding:15, 
+        backgroundColor:'#072E07', 
+        margin:5, 
+        width:"48%",
+        height:140,
           borderRadius:5,
          justifyContent:'center', 
          alignItems:"center",
-        // alignSelf:"center",
-         borderWidth:0.25
+        //  borderWidth:0.25
+    },
+        mktplc: {
+      padding:5, 
+         backgroundColor:'#F7A41F',  
+        margin:5, 
+        width:"48%",
+        height:140,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        //  borderWidth:0.25
+    },
+    toh: {
+      padding:5, 
+         backgroundColor:'#FB88B2', 
+        margin:5, 
+        width:"48%",
+        height:140,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        //  borderWidth:0.25
+    },
+    dlvw: {
+      padding:5, 
+         backgroundColor:'#5A3136', 
+        margin:5, 
+        width:"48%",
+        height:140,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        //  borderWidth:0.25
+        },
+    gctvw: {
+      padding:5,  
+         backgroundColor:'#039490', 
+        margin:5, 
+        width:"48%",
+        height:140,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        //  borderWidth:0.25
+    },
+          tranvw: {
+      padding:5, 
+         backgroundColor:'#B6104A', 
+        margin:5, 
+        width:"48%",
+        height:140,
+          borderRadius:5,
+         justifyContent:'center', 
+         alignItems:"center",
+        //  borderWidth:0.25
     },
     titxt:{
       marginTop:2,
       fontSize:16,
       fontWeight:'normal'
-    }
+    },
+    checknm:{
+      color:'#ffff',
+      fontSize:16,
+      fontWeight:'normal',
+      marginLeft:45
+        },
+    checktt:{
+      color:'#ffff',
+      fontSize:21,
+      fontWeight:'bold',
+      marginRight:70,
+      marginLeft:45
+    },
+    checktxt:{
+      color:'#ffff',
+      fontSize:16,
+      fontWeight:'normal',
+      marginRight:70
+    },
+    checktx:{
+      color:'#ffff',
+      fontSize:16,
+      fontWeight:'normal',
+      marginRight:70
+    },
+    checkhd:{
+      flexDirection:'row',
+      justifyContent:'space-between',
+      marginBottom:15
+      
+    },
+    btnsmd:{
+      backgroundColor:'#FFFFFF',
+      marginTop:9,
+       height:40,
+       width:"40%",
+       borderRadius:5,
+    },
+    txtsmd:{
+      color:"#2ED1C0",
+      fontWeight:"normal",
+      fontSize:14,
+      alignSelf:'center',
+      padding:9
+    },
+    catimg: {
+      // width: width / 2 - 8 - 5,
+      // height: width / 2 - 20 - 30,
+      position: 'absolute',
+        top: -5,
+      width: "80%",
+      height: 80,
+      borderRadius: 5,
+      margin: 12,
+      alignSelf:'center',
+    },
+    catcontain: {
+      backgroundColor: "#FFFFFF",
+      width: "100%",
+      height: 135,
+      //alignItems: "center",
+      alignSelf: "center",
+      borderRadius: 5,
+      padding: 10,
+      margin: 5,
+    },
+    cathist: {
+      backgroundColor: "#FFFFFF",
+      width: "90%",
+      height: 65,
+      //alignItems: "center",
+      alignSelf: "center",
+      borderRadius: 5,
+      padding: 10,
+      margin: 5,
+    },
+    imgpad:{
+      backgroundColor:"#ffff",
+      height: 99,
+      width:"50%",
+      margin:8,
+      borderRadius:6,
+      //left:-12
+      padding:-50,
+      alignSelf: "center",
+    },
+    imgdetail:{
+      backgroundColor:"#ffff",
+      height: 230,
+      width:"80%",
+      margin:15,
+      borderRadius:6,
+      padding:-50,
+      alignSelf: "center",
+    },
+    detimg: {
+      position: 'absolute',
+        top: -6,
+      width: "80%",
+      height: 220,
+      borderRadius: 8,
+      margin: 12,
+      alignSelf:'center',
+    },
+    shadowProp: {  
+      shadowOffset: {width: -2, height: 4},  
+      shadowColor: '#171717',  
+      shadowOpacity: 0.2,  
+      shadowRadius: 3,  
+    }, 
+  
+    container: {
+      width: width / 2 - 20,
+      height: 250,
+      padding: 5,
+      borderRadius: 10,
+      marginTop: 16,
+      marginBottom: 5,
+      marginLeft: 10,
+      alignItems: 'center',
+      elevation: 4,
+      backgroundColor: 'white'
+  },
+  imag: {
+    width: 115,
+    height: 115,
+    borderRadius: 115 / 2,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: 'transparent',
+    margin:12
+  },
+  card: {
+      marginBottom: 10,
+      height: width / 2 - 10 - 90,
+      backgroundColor: 'transparent',
+      width: width / 2 - 20 - 10
+  },
+  title: {
+      fontWeight: "bold",
+      fontSize: 14,
+      textAlign: 'center'
+  },
+  price: {
+      fontSize: 18,
+      color: 'orange',
+      marginTop: 5,
+      textAlign:'flex-start',
+      padding:5
+  },
+  listContainer: {
+    height: height,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    backgroundColor: "gainsboro",
+  }, 
+  searchvw:{
+    backgroundColor: "#FFFFFF",
+    height: 50, 
+    width:"65%",
+    flexDirection:'row',
+    alignSelf:'flex-end',
+    margin:6,
+    borderRadius:3,
+    padding:16
+  },
+  header:{
+    flexDirection:'row',
+   // width:"100%",
+    borderRadius:5,
+    padding:5,
+    justifyContent: "space-between",
+  },
+  headtxt:{
+    fontSize:16,
+    padding:8,
+  },
+  headtxt:{
+    fontSize:16,
+    padding:8,
+    color:'#2ED1C0',
+  },
+  headtx:{
+    fontSize:20,
+    padding:8,
+    color:'#FFFFFF',
+    alignSelf:'center',
+  },
+  headt:{
+    fontSize:20,
+    padding:8,
+    fontWeight:'bold',
+    color:'#2ED1C0',
+  },
+  mkt:{
+    height: 2, 
+    width: "100%", 
+    backgroundColor: "#c8c8c8"
+  },
+  imgdet:{
+    backgroundColor:"#ffff",
+    height: 150,
+    width:"80%",
+    marginTop:60,
+    borderRadius:6,
+    padding:-50,
+    alignSelf: "center",
+  },
+  cardet:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    padding:8
+  },
+  btnlge: {
+    height:45,
+    width:"80%",
+    alignItem:'center',
+    backgroundColor:"#FFFFFF",
+    borderColor:"#D12E3F",
+    borderWidth:1,
+    borderRadius:5,
+    margin:42,
+    flexDirection:'row',
+    paddingLeft:99,
+    paddingTop:9,
+  },
+  imagdat: {
+    width: 130,
+    height: 130,
+    borderRadius: 130 / 2,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: 'transparent',
+    margin:12,
+   // alignSelf:"center",
+  },
+ detailbg:{
+  backgroundColor:'#FFFFFF',
+  borderTopLeftRadius:20,
+  borderTopRightRadius:20,
+  height:"100%",
+  marginTop:15,
+ },
+ catcont: {
+  backgroundColor: "#FFFFFF",
+  width: "90%",
+  height: 135,
+  //alignItems: "center",
+  alignSelf: "center",
+  borderRadius: 5,
+  padding: 10,
+  marginTop: 15,
+},
     
 });
 {/* <View>

@@ -16,6 +16,16 @@ import Gct from '../screens/gasscreen/Gct';
 import Market from '../screens/gasscreen/Market';
 import TopVendor from '../screens/gasscreen/TopVendor';
 import Transactions from '../screens/gasscreen/Transactions';
+import CheckScreen from '../screens/gasscreen/CheckScreen';
+import MapScreen from '../screens/gasscreen/MapScreen';
+import ProductCard from '../screens/cards/ProductCard';
+import VendorCard from '../screens/cards/VendorCard';
+import ProductDetails from '../screens/cards/ProductDetails';
+import VendorDetails from '../screens/cards/VendorDetails';
+import Product from '../screens/cards/Product';
+import Searched from '../screens/cards/Searched';
+import TransHistory from '../screens/cards/TransHistory';
+import HistoryDetails from '../screens/cards/HistoryDetails';
 
 const Stack = createNativeStackNavigator();
 const MainNavigations = () => {
@@ -98,6 +108,56 @@ const MainNavigations = () => {
          <Stack.Screen
             name="TransactionScreen"
             component={Transactions}
+            options={{ headerShown: false }}
+       />
+        <Stack.Screen
+            name="CheckScreen"
+            component={CheckScreen}
+            options={{ headerShown: false }}
+       />
+        <Stack.Screen
+            name="MapScreen"
+            component={MapScreen}
+            options={{ headerShown: false }}
+       />
+        <Stack.Screen
+            name="ProductCard"
+            component={ProductCard}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="VendorCard"
+            component={VendorCard}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="ProductDetails"
+            component={ProductDetails}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="VendorDetails"
+            component={VendorDetails}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="Product"
+            component={Product}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="SearchScreen"
+            component={Searched}
+            options={{ headerShown: false }}
+       />
+         <Stack.Screen
+            name="TransHistScreen"
+            component={TransHistory}
+            options={{ headerShown: false }}
+       />
+       <Stack.Screen
+            name="HistoryScreen"
+            component={HistoryDetails}
             options={{ headerShown: false }}
        />
       {/* <Stack.Screen />  

@@ -1,4 +1,4 @@
-import { SafeAreaView,View, Text } from 'react-native'
+import { SafeAreaView,View, Text, Platform } from 'react-native'
 import React from 'react';
 import styles from '../shared/MainStyle'
 import AccountCard from './header/AccountCard';
@@ -15,7 +15,7 @@ const HomeScreen = () => {
           <View>
               <AccountCard />
           </View>
-          <View style={{backgroundColor:'#ffff',margin:3,   borderRadius:5,}}>
+          <View style={{backgroundColor:'white',borderRadius:5, margin:12, height:Platform.OS === 'android' ? "55%" :"63%"}}>
             <CardBody />
           </View>
         </View>

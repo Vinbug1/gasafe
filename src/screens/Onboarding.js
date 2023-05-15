@@ -19,7 +19,7 @@ const Onboarding = () => {
           <View style={{flex:1,backgroundColor:"#2ED1C0"}}>
             <View style={styles.swapvw}>
               <Image  source={require('../../assets/images/gasafe/gas.jpg')} style={styles.swapimg}/>
-             <TouchableOpacity style={styles.skipvw} onPress={() => {}}>
+             <TouchableOpacity style={styles.skipvw} onPress={() => navigation.navigate('SignIn')}>
                    <Text style={styles.skiptxt}>Skip</Text>
              </TouchableOpacity>
             </View>
@@ -30,7 +30,7 @@ const Onboarding = () => {
         <View style={{flex:1,backgroundColor:"#2ED1C0"}}>
             <View style={styles.swapvw} >
               <Image source={require('../../assets/images/gasafe/map2.png')} style={styles.swapimg1}/>
-             <TouchableOpacity style={styles.skipvw} onPress={() => {}}>
+             <TouchableOpacity style={styles.skipvw} onPress={() => navigation.navigate('SignIn')}>
                    <Text style={styles.skiptxt}>Skip</Text>
              </TouchableOpacity>
                  
