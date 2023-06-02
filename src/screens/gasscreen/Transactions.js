@@ -2,12 +2,12 @@ import React, { useState,useCallback } from "react";
 import Toast from "react-native-root-toast";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import baseUrl from "../../common/baseUrl";
+import baseUrl from "../../../assets/common/baseUrl";
 import styles from "../../shared/MainStyle"; 
 import { Text,View,SafeAreaView,TouchableOpacity} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import {AntDesign,MaterialIcons } from '@expo/vector-icons';
-import TransHistory from "../cards/TransHistory";
+import TransactionHistory from "../cards/TransactionHistory";
 
 
 const Transactions = () => {
@@ -128,7 +128,7 @@ const Transactions = () => {
             },
           }).then((res) => {
               setLoading(false);
-              setHistories(res.data);
+              //setHistories(res.data);
             }).catch((error) => {
               Toast.show(error.message, Toast.LENGTH_SHORT);
             });
@@ -152,7 +152,7 @@ const Transactions = () => {
       </View>
         <View style={{backgroundColor:"#e8e6e6",height:"100%",marginTop:15}}>
               <View contentContainerStyle={{ padding: 9 }} vertical  showsVerticalScrollIndicator={false} >
-                <TransHistory histories={histories}/>
+                   <TransactionHistory histories={histories}/>
               </View> 
          </View>
   </SafeAreaView> 

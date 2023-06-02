@@ -5,7 +5,7 @@ const HistoryCard = (props) => {
     const { name,price} = props;
   return (
     <View style={[styles.cathist,styles.shadowProp]}>
-    <View style={{flexDirection:'row',justifyContent:"space-between"}}>
+    <View style={{flexDirection:'row', justifyContent:"space-between", padding:15}}>
     <View>
       <Text style={styles.txtbrd}>{name}</Text>
       <Text style={styles.txtbrd}>{name}</Text>

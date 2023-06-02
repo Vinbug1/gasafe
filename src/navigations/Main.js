@@ -1,35 +1,11 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import HomeScreen from "../screens/HomeScreen";
-import Cart from "../screens/Cart";
 import Profile from "../screens/Profile";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomeNav from './HomeNav';
+import CartNav from './CartNav';
 
 const Tab = createMaterialBottomTabNavigator();
-// function Feed() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <Text>Feed!</Text>
-//       </View>
-//     );
-//   }
-  
-//   function Profile() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <Text>Profile!</Text>
-//       </View>
-//     );
-//   }
-  
-//   function Notifications() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <Text>Notifications!</Text>
-//       </View>
-//     );
-//   }
 
 function Main() {
   return (
@@ -41,7 +17,7 @@ function Main() {
     >
       <Tab.Screen
         name="HomeScreen"
-        component={HomeScreen }
+        component={HomeNav}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -51,7 +27,7 @@ function Main() {
       />
       <Tab.Screen
         name="Cart"
-        component={Cart}
+        component={CartNav}
         options={{
           tabBarLabel: 'Cart',
           tabBarIcon: ({ color }) => (

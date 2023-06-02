@@ -49,7 +49,7 @@ const CardBody = () => {
                        
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate("TransHistScreen")} style={[styles.tranvw,styles.shadowProp]} >
+                <TouchableOpacity onPress={()=> navigation.navigate("TransactionScreen")} style={[styles.tranvw,styles.shadowProp]} >
                     <View>
                     <Image  source={require('../../../assets/images/optImg/hnady.png')} style={{alignSelf:"center"}}/>
                         <Text style={styles.titxt}>Transactions</Text>

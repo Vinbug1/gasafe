@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import React, { useState, } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
-// import { getUseData, getLastUser } from "../Redux/features/userSlice";
-// import { useDispatch } from "react-redux";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 // import baseUrl from "../Redux/common/baseUrl";
- import styles from "../../shared/MainStyle.js";
+import styles from "../../shared/MainStyle.js";
 import { AntDesign } from '@expo/vector-icons'; 
-import { Text,View,SafeAreaView,TouchableOpacity,Image} from "react-native";
+import { Text,View,SafeAreaView,TouchableOpacity,Image,ScrollView} from "react-native";
 
 
-const CheckScreen = () => {
+const CheckScreen = ({route}) => {
     const navigation = useNavigation();
-    const [cylinderWeight, setCylinderWeight] = useState();
+    const {gasData} = route.params;
+    const [userVendor, setUserVendor] = useState();
     const [numberOfCylinder, setNumberOfCylinder] = useState();
         
   
@@ -37,7 +35,7 @@ const CheckScreen = () => {
         //API_Public.post("register", JSON.stringify(dataToSend))
         axios({
           method: "POST",
-          url: `${baseUrl}users/register`,
+          url: `${baseUrl}users/refillOrder`,
           data: JSON.stringify(dataToSend),
           headers: {
             Accept: "application/json",
@@ -55,6 +53,7 @@ const CheckScreen = () => {
           });
       }
     };
+
   return (
     <SafeAreaView style={styles.sigvw}>
     <View>
@@ -62,11 +61,11 @@ const CheckScreen = () => {
         <AntDesign name="leftcircleo" size={28} color="#ffff" />
         </TouchableOpacity>
     </View>
-        <Image  source={require('../../../assets/images/gasafe/gas_cylinders-removebg-preview.png')} style={{height:"15%",width:"100%", marginTop:15}} resizeMode='contain'/>
+        <Image  source={require('../../../assets/images/gasafe/gas_cylinders-removebg-preview.png')} style={{height:"10%",width:"100%", marginTop:5}} resizeMode='contain'/>
      <View >
      <View style={{ flexDirection:'row' }}>
-     <Image  source={require('../../../assets/images/gasafe/carp.png')} style={{height:"90%",width:"40%", marginTop:5}} resizeMode='contain'/>
-     <View style={{paddingBottom:40}}>
+     <Image  source={require('../../../assets/images/gasafe/carp.png')} style={{height:"90%",width:"50%", marginTop:5}} resizeMode='contain'/>
+     <View style={{paddingBottom:10}}>
           <Text style={{fontSize: 13, fontWeight: "bold", alignSelf: "center",color: '#black' }}>
             Order recieved!!!
           </Text>
@@ -78,41 +77,42 @@ const CheckScreen = () => {
           </Text>
      </View>
     </View>
-        <SafeAreaView style={{backgroundColor:'black',height:"100%",}}  >          
-            <View style={{marginTop:20}} >
+    <View style={{backgroundColor:'black',height:"100%",marginBottom:20}}>
+        {/* <View style={{backgroundColor:'black',height:"100%",}}  >           */}
+            <View style={{marginTop:35}} >
                 <View style={styles.checkhd}>
                     <Text style={styles.checktt}>Total</Text>
-                    <Text style={styles.checktt}>₦{}</Text>
+                    <Text style={styles.checktt}>₦ {gasData.qtyPrice}</Text>
                 </View>
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Gas</Text>
-                    <Text style={styles.checktxt}>₦{}</Text>
+                    <Text style={styles.checktxt}>₦ {gasData.gasPrice}</Text>
                 </View>
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Delievery</Text>
-                    <Text style={styles.checktx}>₦{}</Text>
+                    <Text style={styles.checktx}>₦ {}</Text>
                 </View>
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Vat</Text>
-                    <Text style={styles.checktxt}>₦{}</Text>
+                    <Text style={styles.checktxt}>₦ {}</Text>
                 </View>
             </View>
             <View  style={{ height: 0.25, width: "85%", backgroundColor: "#c8c8c8",alignSelf:'center' }} />
             <View style={{marginTop:12}} >
             <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Discount</Text>
-                    <Text style={styles.checktx}>₦{}</Text>
+                    <Text style={styles.checktx}>₦ {}</Text>
                 </View>
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Total</Text>
-                    <Text style={styles.checktx}>₦{}</Text>
+                    <Text style={styles.checktx}>₦ {gasData.qtyPrice}</Text>
                 </View>
             </View>
             <View  style={{ height: 0.25, width: "85%", backgroundColor: "#c8c8c8",alignSelf:'center' }} />
             <View style={{marginTop:12}} >
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Total Charge</Text>
-                    <Text style={styles.checktx}>₦{}</Text>
+                    <Text style={styles.checktx}>₦ {gasData.qtyPrice}</Text>
                 </View>
             </View>
             
@@ -121,10 +121,12 @@ const CheckScreen = () => {
              onPress={() =>  navigation.navigate("MapScreen")}
              //onPress={() => handleSubmitPress()}
               >
-              <Text style={styles.textsm}>Pay</Text>
+              <Text style={styles.textsm}>Proceed</Text>
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        {/* </View> */}
+
+    </View>
      </View>
   </SafeAreaView>
   )

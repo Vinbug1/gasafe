@@ -1,0 +1,11 @@
+[
+    { "name": "3kg", "code": "ABP" },
+    { "name": "5kg", "code": "FBP" },
+    { "name": "6kg", "code": "FCMBL" },
+    { "name": "10kg", "code": "FBONL" },
+    { "name": "12kg", "code": "FBONL" },
+    { "name": "12.5kg", "code": "FBONL" },
+    { "name": "25kg", "code": "UBONP" },
+    { "name": "50kg", "code": "UBFAP" } 
+  ]
+  

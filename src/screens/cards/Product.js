@@ -8,14 +8,14 @@ const Product = (props) => {
     const navigation = useNavigation();
     const { products } = props;
   return (
-    <ScrollView
+   <ScrollView
     contentContainerStyle={{ padding: 8 }}
     vertical 
     showsVerticalScrollIndicator={false}
-  >
+   >
     {products.map((item, index) => (
       <View key={index}>
-        <TouchableOpacity onPress={() => navigation.navigate("ProductDetails", { item: products[index]})}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProductDetails", {item: products[index]})}>
           <ProductCard {...item} />
         </TouchableOpacity>
       </View>

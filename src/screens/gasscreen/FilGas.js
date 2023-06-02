@@ -2,57 +2,102 @@ import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
-// import { getUseData, getLastUser } from "../Redux/features/userSlice";
-// import { useDispatch } from "react-redux";
 import * as SecureStore from "expo-secure-store";
-import axios from "axios";
-// import baseUrl from "../Redux/common/baseUrl";
+//import axios from "axios";
+import { Dropdown } from "react-native-element-dropdown";
  import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
 import { AntDesign } from '@expo/vector-icons'; 
 import { Text,View,SafeAreaView,TouchableOpacity,Image} from "react-native";
+import gasCylinder from "../../shared/dropdown/gasClyinder"
+
 
 const FilGas = () => {
     const navigation = useNavigation();
     const [cylinderWeight, setCylinderWeight] = useState();
     const [numberOfCylinder, setNumberOfCylinder] = useState();
-        
+    const [otherFieldValue, setOtherFieldValue] = useState('');
+   
+let qtyPrice = otherFieldValue  * numberOfCylinder ;
+
+    let gasData = {
+      cylinder: cylinderWeight,
+      gasPrice:otherFieldValue,
+      qtyPrice:qtyPrice,
+      count: numberOfCylinder,
+    };
+
+    const renderGas = (gasCylinder) => {
+      return (
+        <View style={styles.item}>
+          <Text style={styles.textItem}>{gasCylinder.name}</Text>
+          {gasCylinder.name === gasCylinder.name}
+        </View>
+      );
+    };  
   
     async function save(key, value) {
       await SecureStore.setItemAsync(key, value);
     }
   
     const handleSubmitPress = () => {
-      if (!cylinderWeight) {
-        Toast.show(" businessName field can not be empty", Toast.LENGTH_SHORT);
-      } else if (!numberOfCylinder) {
-        Toast.show("businessPhone field can not be empty", Toast.LENGTH_SHORT);
-        return;      
+      if (cylinderWeight === "" || otherFieldValue === "" || numberOfCylinder === ""){
+        Toast.show(" All fields are rquired", Toast.LENGTH_SHORT);
       }else {
-        let dataToSend = {
-          newpassword: cylinderWeight,
-          confirmpassword: numberOfCylinder,
-        };
-  
+        navigation.navigate("CheckScreen",{gasData: gasData});
         //API_Public.post("register", JSON.stringify(dataToSend))
-        axios({
-          method: "POST",
-          url: `${baseUrl}users/register`,
-          data: JSON.stringify(dataToSend),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }).then((responseJson) => {
-            if (responseJson.status === 200) {
-              const accessToken = responseJson.data;
-              save("secureToken", accessToken); 
-              navigation.navigate("MainScreen");
-            }
-          })
-          .catch((error) => {
-            Toast.show(error.message, Toast.LENGTH_SHORT);
-          });
+        // axios({
+        //   method: "POST",
+        //   url: `${baseUrl}users/register`,
+        //   data: JSON.stringify(dataToSend),
+        //   headers: {
+        //     Accept: "application/json",
+        //     "Content-Type": "application/json",
+        //   },
+        // }).then((responseJson) => {
+        //     if (responseJson.status === 200) {
+        //       const accessToken = responseJson.data;
+        //       save("secureToken", accessToken); 
+        //       navigation.navigate("MainScreen");
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     Toast.show(error.message, Toast.LENGTH_SHORT);
+        //   });
+      }
+    };
+
+    const handleDropdownChange = (value) => {
+      setCylinderWeight(value);
+  
+      // Logic to populate other fields based on the selected dropdown value
+      switch (value) {
+        case '3kg':
+          setOtherFieldValue('500');
+          break;
+        case '5kg':
+          setOtherFieldValue('2,400');
+          break;
+        case '6kg':
+          setOtherFieldValue('5,100');
+          break;
+        case '10kg':
+          setOtherFieldValue('8,500');
+          break;
+        case '12kg':
+          setOtherFieldValue('10,200');
+          break;
+        case '12.5kg':
+          setOtherFieldValue('10.600');
+          break;
+        case '25kg':
+          setOtherFieldValue('21,250');
+          break;
+        case '50kg':
+          setOtherFieldValue('42,500');
+          break;
+        default:
+          setOtherFieldValue('');
       }
     };
   return (
@@ -74,12 +119,30 @@ const FilGas = () => {
           extraHeight={30}
           style={{marginTop:25}}
         >
-          
+          <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={gasCylinder}
+              search
+              maxHeight={300}
+              labelField="name"
+              valueField="name"
+              placeholder="select gas cylinder"
+              searchPlaceholder="Search..."
+              value={cylinderWeight}
+              onChange={(gasCylinder) => 
+                handleDropdownChange(gasCylinder.name)
+              }
+              renderItem={renderGas}
+            />
                         
          <Input
           placeholder="Cylinder Weight"
-          onChangeText={(text) => setCylinderWeight(text)}
-          value={cylinderWeight}
+          onChangeText={(text) => setOtherFieldValue(text.value)}
+          value={otherFieldValue}
           />
 
           <Input
@@ -91,9 +154,10 @@ const FilGas = () => {
        
           <View style={styles.btnlg}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("CheckScreen")} 
-             // onPress={() => handleSubmitPress()} 
-              style={styles.mdbtn}>
+              //onPress={() => navigation.navigate("CheckScreen")} 
+             onPress={() => handleSubmitPress()} 
+             // style={styles.mdbtn}
+              >
               <Text style={styles.textsm}>Proceed</Text>
             </TouchableOpacity>
           </View>

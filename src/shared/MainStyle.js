@@ -9,9 +9,8 @@ module.exports = StyleSheet.create({
   },
   subContain:{
     //flex:1,
-    height: '100%',
-    backgroundColor:"#2ED1C0",
-    marginTop:Platform.OS === 'ios' ? 20 : 45
+    height: '60%',
+    backgroundColor:"#2ED1C0"
   },
   header:{
     flexDirection:'row',
@@ -92,7 +91,6 @@ module.exports = StyleSheet.create({
          fontWeight:'bold',
          fontSize:16
       },
-
        wrapper: {
                backgroundColor: 'white',
             //padding: 8,
@@ -103,17 +101,17 @@ module.exports = StyleSheet.create({
        },
       signvw:{
         height:"250%",
-        marginTop: 105, 
+        marginTop: 95, 
         backgroundColor:"#2ED1C0",
         borderTopRightRadius:8,
         borderTopLeftRadius:8,
       },
       sigvw:{
         height:"250%",
-        marginTop: 48, 
+        //marginTop: 18, 
         backgroundColor:"#2ED1C0",
-        borderTopRightRadius:8,
-        borderTopLeftRadius:8,
+        //borderTopRightRadius:8,
+       // borderTopLeftRadius:8,
       },
     text: {
       color: '#fff',
@@ -310,7 +308,7 @@ module.exports = StyleSheet.create({
          alignItems:"center",
         //  borderWidth:0.25
     },
-          tranvw: {
+  tranvw: {
       padding:5, 
          backgroundColor:'#B6104A', 
         margin:5, 
@@ -392,15 +390,25 @@ module.exports = StyleSheet.create({
       padding: 10,
       margin: 5,
     },
+    histdet: {
+      backgroundColor:'#FFFFFF',
+      borderTopLeftRadius:20,
+      borderTopRightRadius:20,
+      height:"100%",
+      marginTop:5
+    },
     cathist: {
       backgroundColor: "#FFFFFF",
-      width: "90%",
+      width: "95%",
       height: 65,
       //alignItems: "center",
       alignSelf: "center",
       borderRadius: 5,
-      padding: 10,
-      margin: 5,
+      //padding: 10,
+      marginTop: 13,
+      marginLeft: 12,
+      marginRight: 12,
+      marginBottom: 12,
     },
     imgpad:{
       backgroundColor:"#ffff",
@@ -472,9 +480,9 @@ module.exports = StyleSheet.create({
   price: {
       fontSize: 18,
       color: 'orange',
-      marginTop: 5,
+      //marginTop: 5,
       textAlign:'flex-start',
-      padding:5
+      padding:3
   },
   listContainer: {
     height: height,
@@ -536,10 +544,34 @@ module.exports = StyleSheet.create({
     padding:-50,
     alignSelf: "center",
   },
+  imgde:{
+    backgroundColor:"#ffff",
+    height: 300,
+    width:"95%",
+    marginTop:10,
+    borderRadius:4,
+    padding:-50,
+    alignSelf: "center",
+  },
+  tit: {
+    fontWeight: "normal",
+    fontSize: 14,
+    textAlign: 'center'
+},
   cardet:{
     flexDirection:'row',
     justifyContent:'space-between',
     padding:8
+  },
+  cart:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    padding:2
+  },
+  btncart:{
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    padding:5
   },
   btnlge: {
     height:45,
@@ -549,11 +581,35 @@ module.exports = StyleSheet.create({
     borderColor:"#D12E3F",
     borderWidth:1,
     borderRadius:5,
-    margin:42,
+    margin:30,
     flexDirection:'row',
     paddingLeft:99,
     paddingTop:9,
   },
+  btnmsm: {
+    height:40,
+    width:"45%",
+    alignSelf:'center',
+    backgroundColor:"#FFFFFF",
+    borderColor:"#D12E3F",
+    borderWidth:1,
+    borderRadius:5,
+    marginTop:15
+  },
+  textssm:{
+    color:'#D12E3F',
+    alignSelf:'center',
+    paddingTop:8,
+    fontWeight:'bold',
+    fontSize:16
+ },
+ textptd:{
+  color:'#FFFFFF',
+  alignSelf:'center',
+  padding:6,
+  fontWeight:'bold',
+  fontSize:12
+},
   imagdat: {
     width: 130,
     height: 130,
@@ -564,6 +620,7 @@ module.exports = StyleSheet.create({
     margin:12,
    // alignSelf:"center",
   },
+  
  detailbg:{
   backgroundColor:'#FFFFFF',
   borderTopLeftRadius:20,
@@ -582,6 +639,210 @@ module.exports = StyleSheet.create({
   marginTop: 15,
 },
     
+btnptd: {
+  height:35,
+  width:"20%",
+  alignSelf:'center',
+  backgroundColor:"#D12E3F",
+  borderRadius:5,
+  top:45,
+  right:5,
+  padding:6
+  
+},
+
+emptyContainer: {
+  height: height,
+  alignItems: "center",
+  justifyContent: "center",
+},
+bottomContainer: {
+  width: "100%",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  position: "absolute",
+  bottom: 10,
+  left: 0,
+  backgroundColor: "white",
+  elevation: 10,
+  padding: 8,
+},
+// price: {
+//   fontSize: 18,
+//   margin: 20,
+//   color: "red",
+// },
+hiddenContainer: {
+  flex: 1,
+  justifyContent: "flex-end",
+  flexDirection: "row",
+},
+hiddenButton: {
+  backgroundColor: "red",
+  justifyContent: "center",
+  alignItems: "flex-end",
+  paddingRight: 25,
+  height: 70,
+  width: width / 1.2,
+},
+bottomBar: {
+  backgroundColor: "white",
+  width: width,
+  height: 60,
+  padding: 2,
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+},
+input: {
+  height: 40,
+  borderColor: "gray",
+  borderWidth: 1,
+},
+item: {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 1,
+  elevation: 1,
+  padding: 5,
+  margin: 5,
+  backgroundColor: "white",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  borderRadius: 5,
+},
+containers: {
+  flexDirection: 'row',
+  padding: 5,
+  width: width
+},
+image: {
+  borderRadius: 50,
+  width: width / 6,
+  height: 20,
+  margin: 2
+},
+item: {
+  flexWrap: "wrap",
+  margin: 3,
+  width: width / 6
+},
+centeredView: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 22
+},
+modalView: {
+  margin: 20,
+  backgroundColor: "white",
+  borderRadius: 20,
+  padding: 35,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: {
+      width: 0,
+      height: 2
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5
+},
+textStyle: {
+  color: "white",
+  fontWeight: "bold"
+},
+label: {
+  width: "80%",
+  marginTop: 10,
+},
+buttonContainer: {
+  width: "80%",
+  marginBottom: 80,
+  marginTop: 20,
+  alignItems: "center",
+},
+buttonText: {
+  color: "white",
+},
+imageContainer: {
+  width: 200,
+  height: 200,
+  borderStyle: "solid",
+  borderWidth: 8,
+  padding: 0,
+  justifyContent: "center",
+  borderRadius: 100,
+  borderColor: "#E0E0E0",
+  elevation: 10,
+},
+image: {
+  width: "100%",
+  height: "100%",
+  borderRadius: 100,
+},
+imagePicker: {
+  position: "absolute",
+  right: 5,
+  bottom: 5,
+  backgroundColor: "grey",
+  padding: 8,
+  borderRadius: 100,
+  elevation: 20,
+},
+mapContain:{
+  height: "56%",
+  weidth: "100%",
+},
+topmap:{
+  flexDirection:"row",
+  justifyContent:'space-evenly',
+  backgroundColor:"#FFFFFF",
+   height:50, 
+   width:"90%",
+    alignSelf:"center",
+    borderRadius:5,
+    margin:6
+},
+mapbott:{
+  flexDirection:'row',
+  justifyContent:'flex-start',
+  marginLeft:25,
+  //marginBottom:5,
+},
+signtxt:{
+  fontSize:23,
+  color:'white',
+  fontWeight:'bold',
+  left:15
+},
+inputtxt: {
+  width: '85%',
+  height: 50,
+  backgroundColor: 'white',
+  margin: 10,
+  borderRadius: 5,
+  padding: 15,
+  alignSelf:'center'
+ // borderWidth: 1,
+  //borderColor: 'orange'
+},
+filltxt:{
+  padding: 8,
+  marginTop:12,
+   fontSize: 20,
+    fontWeight: "bold",
+     alignSelf: "center",
+     color: '#fff' 
+}
 });
 {/* <View>
 <View>

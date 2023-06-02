@@ -2,7 +2,7 @@ import React, { useState,useCallback } from "react";
 import Toast from "react-native-root-toast";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
- import baseUrl from "../../common/baseUrl";
+ import baseUrl from "../../../assets/common/baseUrl";
  import styles from "../../shared/MainStyle"; 
 import { Text,View,SafeAreaView,TouchableOpacity,ScrollView} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";

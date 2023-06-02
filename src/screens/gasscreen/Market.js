@@ -2,8 +2,8 @@ import React, { useState,useCallback } from "react";
 import Toast from "react-native-root-toast";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
- import baseUrl from "../../common/baseUrl";
- import styles from "../../shared/MainStyle"; 
+import baseUrl from "../../../assets/common/baseUrl";
+import styles from "../../shared/MainStyle"; 
 import { Text,View,SafeAreaView,TouchableOpacity,ScrollView} from "react-native";
 import Product from "../cards/Product";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
@@ -117,11 +117,11 @@ const Market = () => {
   }; 
 
   const visibility = () => {
-    setShouldShow(true);
+    setShouldShow(false);
   };
  
   const invisible = () => {
-    setShouldShow(false);
+    setShouldShow(true);
   };
  
   const pullMe = () => {
@@ -213,19 +213,17 @@ const Market = () => {
         </View>
         <View style={{backgroundColor:"#e8e6e6",height:"100%",marginTop:15}}>
             {shouldShow ? ( 
-              <View contentContainerStyle={{ padding: 9 }} vertical  showsVerticalScrollIndicator={false} >
-                <Product products={products}/>
-              </View> 
-            ):(
               <ScrollView >
                       <View style={styles.listContainer}>
                                 {vendors.map((item) => {
-                                  return (
-                                    <Vendor key={item.name} item={item} />
-                                  );
+                                  return ( <Vendor key={item.name} item={item} /> );
                             })}
                     </View>
               </ScrollView>
+            ):(
+              <View contentContainerStyle={{ padding: 9 }} vertical  showsVerticalScrollIndicator={false} >
+                <Product products={products}/>
+              </View> 
             )}
           
          </View>

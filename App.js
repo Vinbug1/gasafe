@@ -1,18 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet} from 'react-native';
+import {LogBox, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { Provider } from "react-redux";
+import store from "./Redux/store";
 import MainNavigations from './src/navigations/MainNavigations';
+// import Main from './src/navigations/Main';
+import Auth from './Context/store/Auth';
 
+LogBox.ignoreAllLogs();
 export default function App() {
   return (
-    <NavigationContainer>
-   
-  
-    <MainNavigations />
-      <StatusBar style="auto" />
-
-  </NavigationContainer>
+    <Auth>
+      <Provider store={store}>
+        <NavigationContainer>
+        <MainNavigations/>
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </Provider>
+    </Auth>
   );
 }
 

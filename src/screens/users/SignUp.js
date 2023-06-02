@@ -16,16 +16,45 @@ import users from "../../shared/dropdown/UserCategory"
 const SignUp = () => {
   const navigation = useNavigation();
   // const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [userEmail, setUserEmail] = useState();
-  const [userPhone, setUserPhone] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState();
+  let user = {name: name,email: email,password: password,phone: phone,role: role,isAdmin: false};
 
-  async function save(key, value) {
-    await SecureStore.setItemAsync(key, value);
-  }
+  const register = () => {
+    if (email === "" || name === "" || phone === "" || password === ""||role === "") {
+      setError("Please fill in the form correctly");
+    }else if(role === "Vendor"){
+          navigation.navigate('VendorSignUp', {userData:user})
+    }else{
+      axios.post(`${baseURL}users/register`, user).then((res) => {
+          if (res.status == 200) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Registration Succeeded",
+              text2: "Please Login into your account",
+            });
+            setTimeout(() => {
+              props.navigation.navigate("Login");
+            }, 500);
+          }
+        }).catch((error) => {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
+          });
+        });
+    }
+  };
+
+  // async function save(key, value) {
+  //   await SecureStore.setItemAsync(key, value);
+  // }
 
   const renderUser = (users) => {
     return (
@@ -36,115 +65,106 @@ const SignUp = () => {
     );
   };
 
-  const handleSubmitPress = () => {
-    if (!userEmail) {
-      Toast.show(" Email field can not be empty", Toast.LENGTH_SHORT);
-    } else if (!userPhone) {
-      Toast.show("Phone field can not be empty", Toast.LENGTH_SHORT);
-      return;
-    } else if (!firstName) {
-      Toast.show("firstName field can not be empty", Toast.LENGTH_SHORT);
-      return;
-    } else if (!lastName) {
-      Toast.show("lastName field can not be empty", Toast.LENGTH_SHORT);
-      return;
-    } else if (!password) {
-      Toast.show("Password field can not be empty", Toast.LENGTH_SHORT);
-      return;
-    } else if (!role) {
-      Toast.show("role field can not be empty", Toast.LENGTH_SHORT);
-      return;
-    } else {
-      let dataToSend = {
-        email: userEmail,
-        password: password,
-        phone: userPhone,
-        firstname: firstName,
-        lastname: lastName,
-        role: role,
-      };
+  // const handleSubmitPress = () => {
+  //   if (!userEmail) {
+  //     Toast.show(" Email field can not be empty", Toast.LENGTH_SHORT);
+  //   } else if (!userPhone) {
+  //     Toast.show("Phone field can not be empty", Toast.LENGTH_SHORT);
+  //     return;
+  //   } else if (!firstName) {
+  //     Toast.show("firstName field can not be empty", Toast.LENGTH_SHORT);
+  //     return;
+  //   } else if (!lastName) {
+  //     Toast.show("lastName field can not be empty", Toast.LENGTH_SHORT);
+  //     return;
+  //   } else if (!password) {
+  //     Toast.show("Password field can not be empty", Toast.LENGTH_SHORT);
+  //     return;
+  //   } else if (!role) {
+  //     Toast.show("role field can not be empty", Toast.LENGTH_SHORT);
+  //     return;
+  //   } else {
+  //     let dataToSend = {
+  //       email: userEmail,
+  //       password: password,
+  //       phone: userPhone,
+  //       firstname: firstName,
+  //       lastname: lastName,
+  //       role: role,
+  //     };
 
-      //API_Public.post("register", JSON.stringify(dataToSend))
-      axios({
-        method: "POST",
-        url: `${baseUrl}users/register`,
-        data: JSON.stringify(dataToSend),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }).then((responseJson) => {
-          if (responseJson.status === 200) {
-            const accessToken = responseJson.data;
-            save("secureToken", accessToken);
-            let userdata = {
-              email: userEmail,
-              fullname: firstName + " " + lastName,
-              phone: userPhone,
-              address: userAddress,
-              // pin: userPin,
-              userToken: accessToken,
-            };
-            let lastUserName = {
-              email: userEmail,
-              fullname: firstName + " " + lastName,
-            };
-            // dispatch(getUseData(userdata));
-            // dispatch(getLastUser(lastUserName));
+  //     //API_Public.post("register", JSON.stringify(dataToSend))
+  //     axios({
+  //       method: "POST",
+  //       url: `${baseUrl}users/register`,
+  //       data: JSON.stringify(dataToSend),
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //     }).then((responseJson) => {
+  //         if (responseJson.status === 200) {
+  //           const accessToken = responseJson.data;
+  //           save("secureToken", accessToken);
+  //           let userdata = {
+  //             email: userEmail,
+  //             fullname: firstName + " " + lastName,
+  //             phone: userPhone,
+  //             address: userAddress,
+  //             // pin: userPin,
+  //             userToken: accessToken,
+  //           };
+  //           let lastUserName = {
+  //             email: userEmail,
+  //             fullname: firstName + " " + lastName,
+  //           };
+  //           // dispatch(getUseData(userdata));
+  //           // dispatch(getLastUser(lastUserName));
 
-            navigation.navigate("MainScreen");
-          }
-        })
-        .catch((error) => {
-          Toast.show(error.message, Toast.LENGTH_SHORT);
-        });
-    }
-  };
+  //           navigation.navigate("MainScreen");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         Toast.show(error.message, Toast.LENGTH_SHORT);
+  //       });
+  //   }
+  // };
 
   return (
       <SafeAreaView style={styles.subContain}>
         <View style={{ alignSelf: "center", marginTop: 35 }}>
-                <Text style={{ fontSize: 16, alignSelf: "center" }}>
+                <Text style={{ fontSize: 16, alignSelf: "center",color:'#FFFFFF' }}>
                 Hi Dear,
               </Text>
-              <Text style={{marginTop:18, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
-                Welcome Gasafe
-              </Text>
+              <Text style={styles.signtxt}> Welcome Gasafes</Text>
         </View>
          <View style={styles.sigvw}>
          <View>
-              <Text style={{fontSize:20,color:'white',fontWeight:'bold'}}>SignUp</Text>
+              <Text style={styles.signtxt}>SignUp</Text>
             </View>
             <KeyboardAwareScrollView
               extraHeight={30}
               enableAutomaticScroll={true}
             >
               <Input
-                placeholder="First Name"
+                placeholder="Name"
                 onChangeText={(text) => 
-                  setFirstName(text)
+                  setName(text)
                 }
-                value={firstName}
+                value={name}
               />
-              <Input
-                placeholder="LastName"
-                onChangeText={(text) => 
-                  setLastName(text)
-              }
-                value={lastName}
-                styleInput={{ height: "40%" }}
-              />
+              
             
               <Input
                 placeholder="Phone Number"
-                onChangeText={(text) => setUserPhone(text)}
-                value={userPhone}
+                onChangeText={(text) => setPhone(text)}
+                value={phone}
               />
             
               <Input
                 placeholder="Email Address"
-                onChangeText={(text) => setUserEmail(text)}
-                value={userEmail}
+                onChangeText={(text) => setEmail(text)}
+                value={email}
               />
               <Input
                 placeholder="Password"

@@ -17,13 +17,13 @@ import banks from '../../shared/dropdown/Bank';
 import { AntDesign } from '@expo/vector-icons'; 
 
 
-const VendorSignUp = () => {
+const VendorSignUp = ({route}) => {
+  const {userData} = route.params;
     const navigation = useNavigation();
     const [businessName, setBusinessName] = useState();
     const [businessPhone, setBusinessPhone] = useState();
     const [businessEmail, setBusinessEmail] = useState();
     const [nin, setNin] = useState();
-    // const [userId, setUserId] = useState();
     const [state, setState] = useState();
     const [city, setCity] = useState();
     const [bank, setBank] = useState();
@@ -87,47 +87,22 @@ const VendorSignUp = () => {
     }
   
     const handleSubmitPress = () => {
-      if (!businessName) {
-        Toast.show(" businessName field can not be empty", Toast.LENGTH_SHORT);
-      } else if (!businessPhone) {
-        Toast.show("businessPhone field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!businessEmail) {
-        Toast.show("businessEmail field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!state) {
-        Toast.show("state field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!city) {
-        Toast.show("city field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!bank) {
-        Toast.show("bank field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      }
-      else if (!accountNumber) {
-        Toast.show("accountNumber field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!accountName) {
-        Toast.show("accountName field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      } else if (!validId) {
-        Toast.show("validId field can not be empty", Toast.LENGTH_SHORT);
-        return;
-      }else {
-        let dataToSend = {
-          businessname: businessName,
-          businessphone: businessPhone,
-          businessemail: businessEmail,
-          state: state,
-          city: city,
-          bank: bank,
-          nin: nin,
-          accountnumber: accountNumber,
-          accountname: accountName,
-          validId: validId,
-        };
-  
+      let dataToSend = {
+        userData:userData,
+        businessname: businessName,
+        businessphone: businessPhone,
+        businessemail: businessEmail,
+        state: state,
+        city: city,
+        bank: bank,
+        nin: nin,
+        accountnumber: accountNumber,
+        accountname: accountName,
+        validId: validId,
+      };
+      if (businessName === "" || businessPhone || businessEmail === "" || state === "" ||  city === "" || bank === "" || accountNumber === "" || accountName === "" || validId === "") {
+        Toast.show("All fields are required", Toast.LENGTH_SHORT);
+      }else {      
         //API_Public.post("register", JSON.stringify(dataToSend))
         axios({
           method: "POST",
@@ -141,22 +116,7 @@ const VendorSignUp = () => {
             if (responseJson.status === 200) {
               const accessToken = responseJson.data;
               save("secureToken", accessToken);
-              // let userdata = {
-              //   email: userEmail,
-              //   fullname: firstName + " " + lastName,
-              //   phone: userPhone,
-              //   address: userAddress,
-              //   // pin: userPin,
-              //   userToken: accessToken,
-              // };
-              // let lastUserName = {
-              //   email: userEmail,
-              //   fullname: firstName + " " + lastName,
-              // };
-              // dispatch(getUseData(userdata));
-              // dispatch(getLastUser(lastUserName));
-  
-              navigation.navigate("MainScreen");
+              navigation.navigate("SignIn");
             }
           })
           .catch((error) => {
