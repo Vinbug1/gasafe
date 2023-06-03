@@ -16,7 +16,7 @@ const VendorCard = (props) => {
               </Text>
               <Text style={styles.price}>{description}</Text>
               <Text style={styles.price}>{phone}</Text>
-              <Text style={styles.price}>{description}</Text>
+              {/* <Text style={styles.price}>{description}</Text> */}
             </View>
     
   </View>

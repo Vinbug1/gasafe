@@ -40,6 +40,7 @@ const Profile =(props)=>{
       };
     }, [context.stateUser.isAuthenticated])
   );
+  
   return (
     <SafeAreaView style={{backgroundColor:'#FFFFFF',flex:1}}>
                <View>

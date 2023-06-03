@@ -1,11 +1,11 @@
 import { Text,View,SafeAreaView,TouchableOpacity,Image,ScrollView} from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
 // import { getUseData, getLastUser } from "../Redux/features/userSlice";
 // import { useDispatch } from "react-redux";
-import * as SecureStore from "expo-secure-store";
+// import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 // import baseUrl from "../Redux/common/baseUrl";
  import styles from "../../shared/MainStyle";
@@ -14,7 +14,12 @@ import { Dropdown } from "react-native-element-dropdown";
 import states from '../../shared/dropdown/States';
 import lgas from '../../shared/dropdown/Lga';
 import banks from '../../shared/dropdown/Bank';
+import services from '../../shared/dropdown/GasService';
 import { AntDesign } from '@expo/vector-icons'; 
+import mime from "mime";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from "expo-image-picker";
+
 
 
 const VendorSignUp = ({route}) => {
@@ -26,34 +31,159 @@ const VendorSignUp = ({route}) => {
     const [nin, setNin] = useState();
     const [state, setState] = useState();
     const [city, setCity] = useState();
-    const [bank, setBank] = useState();
-    const [accountNumber, setAccountNumber] = useState();
-    const [accountName, setAccountName] = useState();
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [validId, setValidId] = useState();
-    
+    const [service, setService] = useState();
+    const [serviceCharge, setServiceCharge] = useState();
+    const [delieveryCharge, setDelieveryCharge] = useState();
+    const [image, setImage] = useState(null);
+    const [mainImage, setMainImage] = useState();
   
-    const toggleModal = () => {
-      setModalVisible(!isModalVisible);
-    };
-  
-    const offtoggleModal = () => {
-      setModalVisible(false);
-    };
     
-     const showIdPicker = async () => {
-      const permissionResult =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (permissionResult.granted === false) {
-        alert("You've refused to allow this appp to access your photos!");
-        return;
-      }
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.cancelled) {
-        setValidId(result.uri);
-        toggleModal();
-      }
+    useEffect(() => {
+      // if (!props.route.params) {
+      //   setItem(null);
+      // } else {
+      //   setBusinessName(props.route.params.businessName);
+      //   setBusinessEmail(props.route.params.item.businessEmail);
+      //   setBusinessPhone(props.route.params.item.businessPhone);
+      //   setNin(props.route.params.item.nin.toString());
+      //   setState(props.route.params.item.state);
+      //   setMainImage(props.route.params.item.image);
+      //   setImage(props.route.params.item.image);
+      //   setCity(props.route.params.item.city);
+      //   setBank(props.route.params.item.bank);
+      //   setAccountName(props.route.params.item.accountName);
+      //   setAccountNumber(props.route.params.item.accountNumber);
+      // }
+  
+      AsyncStorage.getItem("jwt")
+        .then((res) => {
+          setToken(res);
+        })
+        .catch((error) => console.log(error));
+  
+  
+      // Image Picker
+      (async () => {
+        if (Platform.OS !== "web") {
+          const { status } = await ImagePicker.requestCameraPermissionsAsync();
+          if (status !== "granted") {
+            alert("Sorry, we need camera roll permissions to make this work!");
+          }
+        }
+      })();
+  
+      return () => {
+       // setCategories([]);
       };
+    }, []);
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      console.log(result);
+  
+      if (!result.cancelled) {
+        setMainImage(result.uri);
+        setImage(result.uri);
+        //setImage(result.uri);
+      }
+    };
+  
+  const newVendor = () => {
+      if (
+        businessName == "" ||
+        businessEmail == "" ||
+        businessPhone == "" ||
+        state == "" ||
+        city == "" ||
+        nin == "" ||
+        service == ""||
+        serviceCharge == ""||
+        delieveryCharge == ""
+      ) {
+        setError("Please fill in the form correctly");
+      }
+  
+      let vendorFormData = new FormData();
+  
+      const newImageUri = "file:///" + image.split("file:/").join("");
+  
+      vendorFormData.append("image", {
+        uri: newImageUri,
+        type: mime.getType(newImageUri),
+        name: newImageUri.split("/").pop(),
+      });
+      vendorFormData.append("userData", userData);
+      vendorFormData.append("businessName", businessName);
+      vendorFormData.append("businessPhone", businessPhone);
+      vendorFormData.append("businessEmail", businessEmail);
+      vendorFormData.append("state", state);
+      vendorFormData.append("city", city);
+      vendorFormData.append("nin", nin);
+      vendorFormData.append("service", service);
+  
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      if (item !== null) {
+        axios
+          .put(`${baseURL}vendors/${item.id}`, vendorFormData, config)
+          .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+              Toast.show({
+                topOffset: 60,
+                type: "success",
+                text1: "Vendor successfuly updated",
+                text2: "",
+              });
+              setTimeout(() => {
+                props.navigation.navigate("Products");
+              }, 500);
+            }
+          })
+          .catch((error) => {
+            Toast.show({
+              topOffset: 60,
+              type: "error",
+              text1: "Something went wrong",
+              text2: "Please try again",
+            });
+          });
+      } else {
+        axios
+          .post(`${baseURL}vendors`, formData, config)
+          .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+              Toast.show({
+                topOffset: 60,
+                type: "success",
+                text1: "Vendor created successfully",
+                text2: "",
+              });
+              setTimeout(() => {
+                 navigation.navigate("MarketScreen");
+              }, 500);
+            }
+          })
+          .catch((error) => {
+            Toast.show({
+              topOffset: 60,
+              type: "error",
+              text1: "Something went wrong",
+              text2: "Please try again",
+            });
+          });
+      }
+    };
  
      const renderState = (states) => {
         return (
@@ -73,81 +203,32 @@ const VendorSignUp = ({route}) => {
         );
       };
 
-      const renderBank = (banks) => {
+      const renderService = (services) => {
         return (
           <View style={styles.item}>
-            <Text style={styles.textItem}>{banks.name}</Text>
-            {banks.name === banks.name}
+            <Text style={styles.textItem}>{services.name}</Text>
+            {services.name === services.name}
           </View>
         );
       };
 
-    async function save(key, value) {
-      await SecureStore.setItemAsync(key, value);
-    }
-  
-    const handleSubmitPress = () => {
-      let dataToSend = {
-        userData:userData,
-        businessname: businessName,
-        businessphone: businessPhone,
-        businessemail: businessEmail,
-        state: state,
-        city: city,
-        bank: bank,
-        nin: nin,
-        accountnumber: accountNumber,
-        accountname: accountName,
-        validId: validId,
-      };
-      if (businessName === "" || businessPhone || businessEmail === "" || state === "" ||  city === "" || bank === "" || accountNumber === "" || accountName === "" || validId === "") {
-        Toast.show("All fields are required", Toast.LENGTH_SHORT);
-      }else {      
-        //API_Public.post("register", JSON.stringify(dataToSend))
-        axios({
-          method: "POST",
-          url: `${baseUrl}users/register`,
-          data: JSON.stringify(dataToSend),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }).then((responseJson) => {
-            if (responseJson.status === 200) {
-              const accessToken = responseJson.data;
-              save("secureToken", accessToken);
-              navigation.navigate("SignIn");
-            }
-          })
-          .catch((error) => {
-            Toast.show(error.message, Toast.LENGTH_SHORT);
-          });
-      }
-    };
 
   return (
-    <SafeAreaView>
-        <View>
-            <TouchableOpacity style={{left:8}} onPress={() => navigation.goBack()}>
-            <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
-            </TouchableOpacity>
-        </View>
-        <View style={{ alignSelf: "center", marginTop: 35 }}>
-               
-              <Text style={{ padding: 8,marginTop:12, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
-                As a Vendor
-              </Text>
-        </View>
-         <View style={styles.sigvw}>
-         <View style={{marginTop:15,alignSelf:'center'}}>
-              <Text style={{fontSize:20,color:'white',fontWeight:'bold'}}>Business Information</Text>
-            </View>
+    <SafeAreaView style={styles.sigw} >
+         <TouchableOpacity style={{left:8}} onPress={() => navigation.goBack()}>
+            <AntDesign name="leftcircleo" size={28} color="white" />
+          </TouchableOpacity>
+         {/* <View style={{alignSelf:'center'}}> */}
+              <Text style={{fontSize:20,color:'white',fontWeight:'bold',alignSelf:'center'}}>Business Information</Text>
+            {/* </View> */}
             <KeyboardAwareScrollView
               extraHeight={30}
               enableAutomaticScroll={true}
-              style={{marginTop:15}}
+             // style={{marginTop:5}}
             >
-              <ScrollView horizontal>
+              <ScrollView  vertical
+                        contentContainerStyle={{ marginHorizontal: 2, marginBottom:5 }}
+                        showsHorizontalScrollIndicator={false} >
                 <Input
                   placeholder="businessName"
                   onChangeText={(text) => setBusinessName(text)}
@@ -175,13 +256,32 @@ const VendorSignUp = ({route}) => {
                   <View
                       style={{ flexDirection: "row", width:"86%",marginLeft:25}}>
                       <View style={styles.dropvw}>
-                        <Image source={{ uri: validId }} style={styles.image} resizeMode="cover" />
+                        <Image source={{ uri: mainImage }} style={styles.imagevn} resizeMode="cover" />
                       </View>
-                      <TouchableOpacity style={styles.imbtn} onPress={() =>  showIdPicker()}>
-                        <Text style={styles.textt}>File</Text>
+                      <TouchableOpacity style={styles.imbtn} onPress={() =>  pickImage()}>
+                        <Text style={styles.textt}>Upload</Text>
                       </TouchableOpacity>
-                    </View>
+                  </View>
 
+                <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={services}
+                  search
+                  maxHeight={300}
+                  labelField="name"
+                  valueField="name"
+                  placeholder="select services"
+                  searchPlaceholder="Search..."
+                  value={service}
+                  onChange={(services) => {
+                    setService(services.name);
+                  }}
+                  renderItem={renderService}
+                />
                 <Dropdown
                   style={styles.dropdown}
                   placeholderStyle={styles.placeholderStyle}
@@ -220,38 +320,19 @@ const VendorSignUp = ({route}) => {
                   }}
                   renderItem={renderLga}
                 />
-                
-                <Dropdown
-                  style={styles.dropdown}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={banks}
-                  search
-                  maxHeight={300}
-                  labelField="name"
-                  valueField="name"
-                  placeholder="select bank"
-                  searchPlaceholder="Search..."
-                  value={bank}
-                  onChange={(banks) => {
-                    setBank(banks.name);
-                  }}
-                  renderItem={renderBank}
-                />
                   <Input
-                    placeholder="AccountNumber"
-                    onChangeText={(text) => setAccountNumber(text)}
-                    value={accountNumber}
+                    placeholder="serviceChaerge"
+                    onChangeText={(text) => setServiceCharge(text)}
+                    value={serviceCharge}
                   />
                   <Input
-                    placeholder="AccountName"
-                    onChangeText={(text) => setAccountName(text)}
-                    value={accountName}
+                    placeholder="delieveryChaerge"
+                    onChangeText={(text) => setDelieveryCharge(text)}
+                    value={delieveryCharge}
                   />
+                  
                   <View style={styles.btnm}>
-                    <TouchableOpacity  onPress={() => handleSubmitPress()} style={styles.mdbtn}>
+                    <TouchableOpacity  onPress={() => newVendor()} style={styles.mdbtn}>
                       <Text style={styles.textsm}>Submit</Text>
                     </TouchableOpacity>
                   </View>
@@ -259,7 +340,6 @@ const VendorSignUp = ({route}) => {
               </ScrollView>
                             
             </KeyboardAwareScrollView>
-         </View>
       </SafeAreaView>
   )
 }

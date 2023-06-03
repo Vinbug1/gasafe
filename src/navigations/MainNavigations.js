@@ -28,6 +28,7 @@ import Searched from '../screens/cards/Searched';
 import HistoryDetails from '../screens/cards/HistoryDetails';
 import HistoryCard from '../screens/cards/HistoryCard';
 import TransactionHistory from '../screens/cards/TransactionHistory';
+import VendorBank from '../screens/users/VendorBank';
 //import VendorSignUp from '../screens/users/VendorSignUp';
 
 const Stack = createNativeStackNavigator();
@@ -64,6 +65,11 @@ const MainNavigations = () => {
             component={VendorSignUp}
             options={{ headerShown: false }}
        /> 
+       <Stack.Screen
+            name="VendorBankScreen"
+            component={VendorBank}
+            options={{ headerShown: false }}
+       />
         <Stack.Screen
             name="NewProduct"
             component={NewProduct}

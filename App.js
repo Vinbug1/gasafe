@@ -13,8 +13,8 @@ export default function App() {
     <Auth>
       <Provider store={store}>
         <NavigationContainer>
-        <MainNavigations/>
           <StatusBar style="auto" />
+        <MainNavigations/>
         </NavigationContainer>
       </Provider>
     </Auth>

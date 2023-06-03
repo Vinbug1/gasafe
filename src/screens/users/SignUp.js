@@ -21,15 +21,15 @@ const SignUp = () => {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState();
-  let user = {name: name,email: email,password: password,phone: phone,role: role,isAdmin: false};
+  let userData = {name: name,email: email,password: password,phone: phone,role: role,isAdmin: false};
 
   const register = () => {
     if (email === "" || name === "" || phone === "" || password === ""||role === "") {
       setError("Please fill in the form correctly");
     }else if(role === "Vendor"){
-          navigation.navigate('VendorSignUp', {userData:user})
+          navigation.navigate('VendorSignUp', {userData:userData})
     }else{
-      axios.post(`${baseURL}users/register`, user).then((res) => {
+      axios.post(`${baseURL}users/register`,userData).then((res) => {
           if (res.status == 200) {
             Toast.show({
               topOffset: 60,
@@ -136,7 +136,7 @@ const SignUp = () => {
                 <Text style={{ fontSize: 16, alignSelf: "center",color:'#FFFFFF' }}>
                 Hi Dear,
               </Text>
-              <Text style={styles.signtxt}> Welcome Gasafes</Text>
+              <Text style={styles.signtxt}> Welcome Gasafe</Text>
         </View>
          <View style={styles.sigvw}>
          <View>
@@ -194,8 +194,8 @@ const SignUp = () => {
             />
               <View style={styles.btnm}>
                 <TouchableOpacity
-                           onPress={() => navigation.navigate("VendorSignUp")}  
-                //onPress={() => handleSubmitPress()} 
+                          // onPress={() => navigation.navigate("VendorSignUp")}  
+                onPress={() => register()} 
                 style={styles.mdbtn}>
                   <Text style={styles.textsm}>Submit</Text>
                 </TouchableOpacity>

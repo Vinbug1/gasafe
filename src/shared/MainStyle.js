@@ -9,7 +9,7 @@ module.exports = StyleSheet.create({
   },
   subContain:{
     //flex:1,
-    height: '60%',
+    height: '50%',
     backgroundColor:"#2ED1C0"
   },
   header:{
@@ -36,11 +36,12 @@ module.exports = StyleSheet.create({
       },
       btnm: {
         height:50,
-        width:80,
+        width:170,
         alignSelf:'center',
         backgroundColor:"#D12E3F",
         borderRadius:5,
-        marginTop:35
+        marginTop:5,
+        marginBottom:15
       },
         btnlg: {
         height:50,
@@ -101,14 +102,21 @@ module.exports = StyleSheet.create({
        },
       signvw:{
         height:"250%",
-        marginTop: 95, 
+        marginTop: 80, 
         backgroundColor:"#2ED1C0",
-        borderTopRightRadius:8,
-        borderTopLeftRadius:8,
+        borderTopRightRadius:6,
+        borderTopLeftRadius:6,
       },
       sigvw:{
         height:"250%",
-        //marginTop: 18, 
+        marginTop: 80, 
+        backgroundColor:"#2ED1C0",
+        //borderTopRightRadius:8,
+       // borderTopLeftRadius:8,
+      },
+      sigw:{
+        height:"250%",
+        //marginTop: 80, 
         backgroundColor:"#2ED1C0",
         //borderTopRightRadius:8,
        // borderTopLeftRadius:8,
@@ -129,9 +137,9 @@ module.exports = StyleSheet.create({
       width: '85%',
       height: 50,
       backgroundColor: 'white',
-      margin: 10,
+      margin: 6,
       borderRadius: 5,
-      padding: 15,
+      padding: 5,
       alignSelf:'center'
     },
     dropvw: {
@@ -188,10 +196,12 @@ module.exports = StyleSheet.create({
     },
     imbtn: {
       height: 48,
-      width: "20%",
+      width: "25%",
       // alignSelf: "center",
       backgroundColor: "#D12E3F",
-      borderRadius: 2,
+      //borderRadius: ,
+      borderTopRightRadius:5,
+      borderBottomRightRadius:5,
       marginTop:2
     },
     root: {
@@ -325,26 +335,26 @@ module.exports = StyleSheet.create({
       fontWeight:'normal'
     },
     checknm:{
-      color:'#ffff',
+      color:'black',
       fontSize:16,
       fontWeight:'normal',
       marginLeft:45
         },
     checktt:{
-      color:'#ffff',
+      color:'black',
       fontSize:21,
       fontWeight:'bold',
       marginRight:70,
       marginLeft:45
     },
     checktxt:{
-      color:'#ffff',
+      color:'black',
       fontSize:16,
       fontWeight:'normal',
       marginRight:70
     },
     checktx:{
-      color:'#ffff',
+      color:'black',
       fontSize:16,
       fontWeight:'normal',
       marginRight:70
@@ -381,7 +391,7 @@ module.exports = StyleSheet.create({
       alignSelf:'center',
     },
     catcontain: {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: "#2ED1C0",
       width: "100%",
       height: 135,
       //alignItems: "center",
@@ -421,7 +431,7 @@ module.exports = StyleSheet.create({
       alignSelf: "center",
     },
     imgdetail:{
-      backgroundColor:"#ffff",
+      backgroundColor:"#2ED1C0",
       height: 230,
       width:"80%",
       margin:15,
@@ -439,10 +449,10 @@ module.exports = StyleSheet.create({
       alignSelf:'center',
     },
     shadowProp: {  
-      shadowOffset: {width: -2, height: 4},  
-      shadowColor: '#171717',  
+      shadowOffset: {width: -4, height: 5},  
+      shadowColor: '#2ED1C0',  
       shadowOpacity: 0.2,  
-      shadowRadius: 3,  
+      shadowRadius: 5,  
     }, 
   
     container: {
@@ -450,6 +460,8 @@ module.exports = StyleSheet.create({
       height: 250,
       padding: 5,
       borderRadius: 10,
+      borderColor: '#2ED1C0',
+      borderWidth: 0.25,
       marginTop: 16,
       marginBottom: 5,
       marginLeft: 10,
@@ -513,7 +525,7 @@ module.exports = StyleSheet.create({
     fontSize:16,
     padding:8,
   },
-  headtxt:{
+  headertxt:{
     fontSize:16,
     padding:8,
     color:'#2ED1C0',
@@ -622,14 +634,14 @@ module.exports = StyleSheet.create({
   },
   
  detailbg:{
-  backgroundColor:'#FFFFFF',
-  borderTopLeftRadius:20,
-  borderTopRightRadius:20,
+  backgroundColor:'#2ED1C0',
+  borderTopLeftRadius:5,
+  borderTopRightRadius:5,
   height:"100%",
-  marginTop:15,
+  marginTop:5,
  },
  catcont: {
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "#2ED1C0",
   width: "90%",
   height: 135,
   //alignItems: "center",
@@ -784,10 +796,10 @@ imageContainer: {
   borderColor: "#E0E0E0",
   elevation: 10,
 },
-image: {
+imagevn: {
   width: "100%",
   height: "100%",
-  borderRadius: 100,
+  borderRadius: 5,
 },
 imagePicker: {
   position: "absolute",
@@ -842,7 +854,27 @@ filltxt:{
     fontWeight: "bold",
      alignSelf: "center",
      color: '#fff' 
-}
+},
+inputtx: {
+  width: '85%',
+  height: 50,
+  backgroundColor: 'white',
+  margin: 5,
+  borderRadius: 5,
+  padding: 15,
+  alignSelf:'center'
+},
+imageContainer: {
+  width: 200,
+  height: 200,
+  borderStyle: "solid",
+  borderWidth: 8,
+  padding: 0,
+  justifyContent: "center",
+  borderRadius: 100,
+  borderColor: "#E0E0E0",
+  elevation: 10,
+},
 });
 {/* <View>
 <View>

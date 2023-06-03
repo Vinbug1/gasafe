@@ -55,7 +55,7 @@ const CheckScreen = ({route}) => {
     };
 
   return (
-    <SafeAreaView style={styles.sigvw}>
+    <SafeAreaView style={styles.sigw}>
     <View>
         <TouchableOpacity style={{left:8,top:5}} onPress={() => navigation.goBack()}>
         <AntDesign name="leftcircleo" size={28} color="#ffff" />
@@ -77,7 +77,7 @@ const CheckScreen = ({route}) => {
           </Text>
      </View>
     </View>
-    <View style={{backgroundColor:'black',height:"100%",marginBottom:20}}>
+    <View style={{backgroundColor:'white',height:"100%",marginBottom:20}}>
         {/* <View style={{backgroundColor:'black',height:"100%",}}  >           */}
             <View style={{marginTop:35}} >
                 <View style={styles.checkhd}>
@@ -94,10 +94,10 @@ const CheckScreen = ({route}) => {
                 </View>
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Vat</Text>
-                    <Text style={styles.checktxt}>₦ {}</Text>
+                    <Text style={styles.checktxt}>₦ 7.5%</Text>
                 </View>
             </View>
-            <View  style={{ height: 0.25, width: "85%", backgroundColor: "#c8c8c8",alignSelf:'center' }} />
+            <View  style={{ height: 0.25, width: "99%", backgroundColor: "#2ED1C0",alignSelf:'center' }} />
             <View style={{marginTop:12}} >
             <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Discount</Text>
@@ -108,7 +108,7 @@ const CheckScreen = ({route}) => {
                     <Text style={styles.checktx}>₦ {gasData.qtyPrice}</Text>
                 </View>
             </View>
-            <View  style={{ height: 0.25, width: "85%", backgroundColor: "#c8c8c8",alignSelf:'center' }} />
+            <View  style={{ height: 0.25, width: "99%", backgroundColor: "#2ED1C0",alignSelf:'center' }} />
             <View style={{marginTop:12}} >
                 <View style={styles.checkhd}>
                     <Text style={styles.checknm}>Total Charge</Text>

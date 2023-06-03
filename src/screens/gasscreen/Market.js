@@ -193,7 +193,7 @@ const Market = () => {
              <Fontisto name="shopping-store" size={25} color="#2ED1C0"  style={{alignSelf:"center"}} />
           </View>
       </View>
-      <View style={{ height: 3, width: "100%", backgroundColor: "#c8c8c8" }} />
+      <View style={{ height: 3, width: "100%", backgroundColor: "#62f5e5" }} />
          <View style={[styles.searchvw,styles.shadowProp]} > 
                   <Input  placeholder="productsFiltered" onChangeText={(text) => setProductsFiltered(text)} value={productsFiltered} secureTextEntry={true} /> 
                     <EvilIcons name="search" size={25} color="black" />  
@@ -211,7 +211,7 @@ const Market = () => {
               </TouchableOpacity>
           </>
         </View>
-        <View style={{backgroundColor:"#e8e6e6",height:"100%",marginTop:15}}>
+        <View style={{backgroundColor:"white",height:"100%",marginTop:15}}>
             {shouldShow ? ( 
               <ScrollView >
                       <View style={styles.listContainer}>

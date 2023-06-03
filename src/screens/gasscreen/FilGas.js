@@ -9,7 +9,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import Input from "../../shared/Input";
 import { AntDesign } from '@expo/vector-icons'; 
 import { Text,View,SafeAreaView,TouchableOpacity,Image} from "react-native";
-import gasCylinder from "../../shared/dropdown/gasClyinder"
+import gasCylinder from "../../shared/dropdown/GasClyinder"
 
 
 const FilGas = () => {
@@ -76,25 +76,25 @@ let qtyPrice = otherFieldValue  * numberOfCylinder ;
           setOtherFieldValue('500');
           break;
         case '5kg':
-          setOtherFieldValue('2,400');
+          setOtherFieldValue('2400');
           break;
         case '6kg':
-          setOtherFieldValue('5,100');
+          setOtherFieldValue('5100');
           break;
         case '10kg':
-          setOtherFieldValue('8,500');
+          setOtherFieldValue('8500');
           break;
         case '12kg':
-          setOtherFieldValue('10,200');
+          setOtherFieldValue('10200');
           break;
         case '12.5kg':
-          setOtherFieldValue('10.600');
+          setOtherFieldValue('10600');
           break;
         case '25kg':
-          setOtherFieldValue('21,250');
+          setOtherFieldValue('21250');
           break;
         case '50kg':
-          setOtherFieldValue('42,500');
+          setOtherFieldValue('42500');
           break;
         default:
           setOtherFieldValue('');

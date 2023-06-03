@@ -9,7 +9,7 @@ const CardBody = () => {
   
   return (
 
-    <SafeAreaView style={{}}>
+    <SafeAreaView style={{alignSelf:'center',marginTop:15}}>
         <>
             <View style={{flexDirection:'row',justifyContent:"space-evenly"}}>
                 <TouchableOpacity onPress={()=> navigation.navigate("FilGasScreen")} style={[styles.filgs,styles.shadowProp]} >

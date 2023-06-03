@@ -7,15 +7,14 @@ import CardBody from './header/CardBody';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={{backgroundColor:'#ffff'}}>
+    <SafeAreaView style={{backgroundColor:'#FFFFFF',height:"100%"}}>
       <View style={styles.header}>
-          
       </View>
         <View style={styles.subContain}>
           <View>
               <AccountCard />
           </View>
-          <View style={{backgroundColor:'white',borderRadius:5, margin:12, height:Platform.OS === 'android' ? "55%" :"63%"}}>
+          <View style={{backgroundColor:'white',height:"100%"}}>
             <CardBody />
           </View>
         </View>

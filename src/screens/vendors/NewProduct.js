@@ -14,15 +14,17 @@ import Input from "../../shared/Input";
 import { AntDesign } from '@expo/vector-icons'; 
 
 const NewProduct = (props) => {
-  const [pickerValue, setPickerValue] = useState();
-  const [weight, setWeight] = useState();
-  const [name, setName] = useState();
-  const [price, setPrice] = useState();
-  const [description, setDescription] = useState();
+  const [vendorNames, setVendorNames] = useState();
+  const [vendor, setVendor] = useState();
+  const [businessName, setBusinessName] = useState();
+  const [productName, setProductName] = useState();
   const [image, setImage] = useState();
   const [mainImage, setMainImage] = useState();
-  const [category, setCategory] = useState();
-  const [categories, setCategories] = useState([]);
+  const [weight, setWeight] = useState();
+  const [price, setPrice] = useState();
+  const [description, setDescription] = useState();
+  const [delieveryCharge, setDelieveryCharge] = useState();
+  const [make, setMake] = useState([]);
   const [token, setToken] = useState();
   const [err, setError] = useState();
   const [countInStock, setCountInStock] = useState();
@@ -32,22 +34,29 @@ const NewProduct = (props) => {
   const [numReviews, setNumReviews] = useState(0);
   const [item, setItem] = useState(null);
 
-
+  const rendervendor = (vendorNames) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{vendorNames.name}</Text>
+        {vendorNames.name === vendorNames.name}
+      </View>
+    );
+  };
 
   useEffect(() => {
-    if (!props.route.params) {
-      setItem(null);
-    } else {
-      setItem(props.route.params.item);
-      setWeight(props.route.params.item.weight);
-      setName(props.route.params.item.name);
-      setPrice(props.route.params.item.price.toString());
-      setDescription(props.route.params.item.description);
-      setMainImage(props.route.params.item.image);
-      setImage(props.route.params.item.image);
-      setCategory(props.route.params.item.category._id);
-      setCountInStock(props.route.params.item.countInStock.toString());
-    }
+    // if (!props.route.params) {
+    //   setItem(null);
+    // } else {
+    //   setItem(props.route.params.item);
+    //   setWeight(props.route.params.item.weight);
+    //   setName(props.route.params.item.name);
+    //   setPrice(props.route.params.item.price.toString());
+    //   setDescription(props.route.params.item.description);
+    //   setMainImage(props.route.params.item.image);
+    //   setImage(props.route.params.item.image);
+    //   setCategory(props.route.params.item.category._id);
+    //   setCountInStock(props.route.params.item.countInStock.toString());
+    // }
     AsyncStorage.getItem("jwt")
       .then((res) => {
         setToken(res);
@@ -56,9 +65,9 @@ const NewProduct = (props) => {
 
     // Categories
     axios
-      .get(`${baseUrl}categories`)
-      .then((res) => setCategories(res.data))
-      .catch((error) => alert("Error to load categories"));
+      .get(`${baseUrl}vendors`)
+      .then((res) => setVendorNames(res.data))
+      .catch((error) => alert("Error to load Vendors"));
 
     // Image Picker
     (async () => {
@@ -71,7 +80,7 @@ const NewProduct = (props) => {
     })();
 
     return () => {
-      setCategories([]);
+      setVendorName([]);
     };
   }, []);
 
@@ -91,12 +100,17 @@ const NewProduct = (props) => {
 
   const addProduct = () => {
     if (
-      name == "" ||
-      //brand == "" ||
+      vendor == ""||
+      productName == "" ||
+      image == "" ||
+      delieveryCharge == "" ||
       price == "" ||
       description == "" ||
-      category == "" ||
-      countInStock == ""
+      make == "" ||
+      weight == "" ||
+      countInStock == ""||
+      rating == "" ||
+      isFeatured == "" 
     ) {
       setError("Please fill in the form correctly");
     }
@@ -110,14 +124,17 @@ const NewProduct = (props) => {
       type: mime.getType(newImageUri),
       name: newImageUri.split("/").pop(),
     });
-    formData.append("name", name);
-    //formData.append("brand", brand);
+    formData.append("vendor", vendor);
+    formData.append("businessName", businessName);
+    formData.append("productName", productName);
+    formData.append("delieveryCharge", delieveryCharge);
+    formData.append("image", image);
     formData.append("price", price);
     formData.append("description", description);
-    formData.append("category", category);
     formData.append("countInStock", countInStock);
     formData.append("weight", weight);
     formData.append("rating", rating);
+    formData.append("make", make);
     formData.append("numReviews", numReviews);
     formData.append("isFeatured", isFeatured);
 
@@ -187,15 +204,14 @@ const NewProduct = (props) => {
         </TouchableOpacity>
     </View>
     <View style={{ alignSelf: "center", marginTop: 35 }}>
-           
-          <Text style={{ padding: 8,marginTop:12, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
-            As a Vendor
-          </Text>
+        <Text style={{ padding: 8,marginTop:12, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
+            New Product
+        </Text>
     </View>
      <View style={styles.sigvw}>
      <View style={{marginTop:45,alignSelf:'center'}}>
           <Text style={{fontSize:20,color:'white',fontWeight:'bold'}}>New Product</Text>
-        </View>
+      </View>
         <KeyboardAwareScrollView extraHeight={30} style={{marginTop:25}} >
         <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: mainImage }} />
@@ -204,16 +220,46 @@ const NewProduct = (props) => {
             </TouchableOpacity>
          </View>
 
+         <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={vendorNames}
+                  search
+                  maxHeight={300}
+                  labelField="name"
+                  valueField="name"
+                  placeholder="select vendor"
+                  searchPlaceholder="Search..."
+                  value={vendorNames}
+                  onChange={(vendorNames) => {
+                    setVendor(vendorNames.name);
+                  }}
+                  renderItem={rendervendor}
+                />
+
+          <Input
+            placeholder="BusinessName"
+            onChangeText={(text) => setBusinessName(text)}
+            value={businessName}
+          />
           <Input
             placeholder="ProductName"
-            onChangeText={(text) => setName(text)}
-            value={name}
+            onChangeText={(text) => setProductName(text)}
+            value={productName}
           />
 
            <Input
             placeholder="description"
             onChangeText={(text) => setDescription(text)}
-            value={weight}
+            value={description}
+          />
+          <Input
+            placeholder="make"
+            onChangeText={(text) => setMake(text)}
+            value={make}
           />
 
            <Input
@@ -221,11 +267,17 @@ const NewProduct = (props) => {
             onChangeText={(text) => setWeight(text)}
             value={weight}
           />
+
+          <Input
+            placeholder="delieveryCharge"
+            onChangeText={(text) => setDelieveryCharge(text)}
+            value={delieveryCharge}
+          />
         
           <Input
-            placeholder="amount"
-            onChangeText={(text) => setAmount(text)}
-            value={amount}
+            placeholder="price"
+            onChangeText={(text) => setPrice(text)}
+            value={price}
           />
            <View picker>
         <Picker

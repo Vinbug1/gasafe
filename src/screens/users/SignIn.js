@@ -121,16 +121,17 @@ const SignIn = (props) => {
       loginUser(user, context.dispatch);
     }
   };
+  
   return (
-    <SafeAreaView style={{marginTop:Platform.OS === 'ios' ? 0 : 45}}>
+    <SafeAreaView style={{marginTop:45}}>
         <View style={{ alignSelf: "center",marginTop:35}}>
             <Text style={{fontSize:40,marginTop:10,color:"#2ED1C0",margin:8,alignSelf:'center'}}>Gasafe</Text>
-            <Text style={{fontSize:25,marginTop:8,color:"#2ED1C0 "}}>Welcome Back</Text>
+            <Text style={{fontSize:35,marginTop:8,color:"#2ED1C0 ",fontWeight:"bold"}}>Welcome Back</Text>
           {/* <Image /> */}
         </View>
         <View style={styles.signvw}>
             <View>
-              <Text style={styles.headtxt}>SignIn</Text>
+              <Text style={styles.headertxt}>SignIn</Text>
             </View>
                 <KeyboardAwareScrollView  style={{marginTop:60}}>
                 <View>

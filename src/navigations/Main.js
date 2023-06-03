@@ -11,9 +11,9 @@ function Main() {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
-      activeColor="#2ED1C0"
+      activeColor="#FFFFFF"
       inactiveColor="black"
-      barStyle={{ backgroundColor: '#ffff' }}
+      barStyle={{ backgroundColor: '#2ED1C0' }}
     >
       <Tab.Screen
         name="HomeScreen"

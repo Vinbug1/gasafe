@@ -33,7 +33,10 @@ const VendorDetails = (props) => {
                 </View>          
              </View>
        </View>
-          <View style={{backgroundColor:'gainsboro',height:"100%",borderTopLeftRadius:20, borderTopRightRadius:20,}}>
+          <View style={{backgroundColor:'#FFFFFF',height:"100%",borderTopLeftRadius:20, borderTopRightRadius:20,}}>
+            <View style={{margin:15}}>
+                <Text style={{fontWeight:'bold',fontSize:13}}>Products</Text>
+            </View>
               <View style={[styles.catcont,styles.shadowProp]}>
                     <View style={{flexDirection:'row',justifyContent:"space-around"}}>
                           <View style={[styles.imgpad,styles.shadowProp]}>
