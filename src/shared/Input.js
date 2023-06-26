@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native'
-
+import styles from "../shared/MainStyle"
 const Input = (props) => {
     return (
         <TextInput
-        style={styles.input}
+        style={styles.aptinput}
         placeholder={props.placeholder}
         name={props.name}
         id={props.id}
@@ -19,18 +19,5 @@ const Input = (props) => {
     );
 }
 
-const styles = StyleSheet.create({
-    input: {
-        width: '85%',
-        height: 50,
-        backgroundColor: 'white',
-        margin: 10,
-        borderRadius: 5,
-        padding: 15,
-        alignSelf:'center'
-       // borderWidth: 1,
-        //borderColor: 'orange'
-    },
-});
 
 export default Input;

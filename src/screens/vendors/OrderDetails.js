@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const ProductDetails = ({ route }) => {
+const OrderDetails = () => {
   const { item } = route.params;
   const navigation = useNavigation();
   return (
@@ -21,7 +21,7 @@ const ProductDetails = ({ route }) => {
           style={{ left: 8, top: 5 }}
           onPress={() => navigation.goBack()}
         >
-          <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
+          <AntDesign name="leftcircleo" size={28} color="#FFFFFF" />
         </TouchableOpacity>
         <View
           style={{ flexDirection: "row", alignSelf: "center", marginLeft: 120 }}
@@ -32,10 +32,10 @@ const ProductDetails = ({ route }) => {
       <View
         style={{
           backgroundColor: "#FFFFFF",
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           height: "100%",
-          marginTop: 5,
+          marginTop: 45,
         }}
       >
         <View style={[styles.imgdetail, styles.shadowProp]}>
@@ -73,4 +73,4 @@ const ProductDetails = ({ route }) => {
   );
 };
 
-export default ProductDetails;
+export default OrderDetails;

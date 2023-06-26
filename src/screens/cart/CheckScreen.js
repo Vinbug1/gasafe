@@ -57,7 +57,7 @@ const CheckScreen = ({route}) => {
   return (
     <SafeAreaView style={styles.sigw}>
     <View>
-        <TouchableOpacity style={{left:8,top:5}} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={{left:8,top:Platform.OS === 'ios' ? 5 : 45}} onPress={() => navigation.goBack()}>
         <AntDesign name="leftcircleo" size={28} color="#ffff" />
         </TouchableOpacity>
     </View>

@@ -8,7 +8,7 @@ import { Dropdown } from "react-native-element-dropdown";
  import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
 import { AntDesign } from '@expo/vector-icons'; 
-import { Text,View,SafeAreaView,TouchableOpacity,Image} from "react-native";
+import { Text,View,SafeAreaView,TouchableOpacity,Image,Platform} from "react-native";
 import gasCylinder from "../../shared/dropdown/GasClyinder"
 
 
@@ -101,13 +101,13 @@ let qtyPrice = otherFieldValue  * numberOfCylinder ;
       }
     };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{marginTop:Platform.OS === 'ios' ? 0 : 35}}>
     <View>
-        <TouchableOpacity style={{left:8}} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={{left:16}} onPress={() => navigation.goBack()}>
         <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
         </TouchableOpacity>
     </View>
-    <Image  source={require('../../../assets/images/gasafe/cartoon_cylinder-removebg-preview.png')} style={{height:"9%",width:"100%", marginTop:15}} resizeMode='contain'/>
+    <Image  source={require('../../../assets/images/gasafe/cartoon_cylinder-removebg-preview.png')} style={{height:"19%",width:"100%", marginTop:15}} resizeMode='contain'/>
 
      <View style={styles.sigvw}>
      <View style={{ alignSelf: "center" }}>
@@ -117,7 +117,7 @@ let qtyPrice = otherFieldValue  * numberOfCylinder ;
     </View>
         <KeyboardAwareScrollView
           extraHeight={30}
-          style={{marginTop:25}}
+          style={{marginTop:5}}
         >
           <Dropdown
               style={styles.dropdown}

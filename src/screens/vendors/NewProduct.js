@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {View,Text,Image,TouchableOpacity,Platform } from "react-native";
+import { View, Text, Image, TouchableOpacity, Platform } from "react-native";
 import { Picker } from "native-base";
 import Error from "../../shared/Error";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -9,9 +9,9 @@ import baseUrl from "../../../assets/common/baseUrl";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
- import styles from "../../shared/MainStyle";
+import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from "@expo/vector-icons";
 
 const NewProduct = (props) => {
   const [vendorNames, setVendorNames] = useState();
@@ -42,21 +42,11 @@ const NewProduct = (props) => {
       </View>
     );
   };
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   useEffect(() => {
-    // if (!props.route.params) {
-    //   setItem(null);
-    // } else {
-    //   setItem(props.route.params.item);
-    //   setWeight(props.route.params.item.weight);
-    //   setName(props.route.params.item.name);
-    //   setPrice(props.route.params.item.price.toString());
-    //   setDescription(props.route.params.item.description);
-    //   setMainImage(props.route.params.item.image);
-    //   setImage(props.route.params.item.image);
-    //   setCategory(props.route.params.item.category._id);
-    //   setCountInStock(props.route.params.item.countInStock.toString());
-    // }
     AsyncStorage.getItem("jwt")
       .then((res) => {
         setToken(res);
@@ -80,7 +70,7 @@ const NewProduct = (props) => {
     })();
 
     return () => {
-      setVendorName([]);
+      setVendorNames([]);
     };
   }, []);
 
@@ -100,7 +90,7 @@ const NewProduct = (props) => {
 
   const addProduct = () => {
     if (
-      vendor == ""||
+      vendor == "" ||
       productName == "" ||
       image == "" ||
       delieveryCharge == "" ||
@@ -108,9 +98,9 @@ const NewProduct = (props) => {
       description == "" ||
       make == "" ||
       weight == "" ||
-      countInStock == ""||
+      countInStock == "" ||
       rating == "" ||
-      isFeatured == "" 
+      isFeatured == ""
     ) {
       setError("Please fill in the form correctly");
     }
@@ -198,47 +188,60 @@ const NewProduct = (props) => {
 
   return (
     <SafeAreaView>
-    <View>
-        <TouchableOpacity style={{left:8}} onPress={() => navigation.goBack()}>
-        <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
+      <View>
+        <TouchableOpacity
+          style={{ left: 8 }}
+          onPress={() => navigation.goBack()}
+        >
+          <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
         </TouchableOpacity>
-    </View>
-    <View style={{ alignSelf: "center", marginTop: 35 }}>
-        <Text style={{ padding: 8,marginTop:12, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
-            New Product
-        </Text>
-    </View>
-     <View style={styles.sigvw}>
-     <View style={{marginTop:45,alignSelf:'center'}}>
-          <Text style={{fontSize:20,color:'white',fontWeight:'bold'}}>New Product</Text>
       </View>
-        <KeyboardAwareScrollView extraHeight={30} style={{marginTop:25}} >
-        <View style={styles.imageContainer}>
+      <View style={{ alignSelf: "center", marginTop: 35 }}>
+        <Text
+          style={{
+            padding: 8,
+            marginTop: 12,
+            fontSize: 25,
+            fontWeight: "bold",
+            alignSelf: "center",
+          }}
+        >
+          New Product
+        </Text>
+      </View>
+      <View style={styles.sigvw}>
+        <View style={{ marginTop: 45, alignSelf: "center" }}>
+          <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
+            New Product
+          </Text>
+        </View>
+        <KeyboardAwareScrollView extraHeight={30} style={{ marginTop: 25 }}>
+          <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: mainImage }} />
             <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
               <Icon style={{ color: "white" }} name="camera" />
             </TouchableOpacity>
-         </View>
+          </View>
 
-         <Dropdown
-                  style={styles.dropdown}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  iconStyle={styles.iconStyle}
-                  data={vendorNames}
-                  search
-                  maxHeight={300}
-                  labelField="name"
-                  valueField="name"
-                  placeholder="select vendor"
-                  searchPlaceholder="Search..."
-                  value={vendorNames}
-                  onChange={(vendorNames) => {
-                    setVendor(vendorNames.name);
-                  }}
-                  renderItem={rendervendor}
-                />
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={vendorNames}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="select vendor"
+            searchPlaceholder="Search..."
+            value={vendorNames}
+            onChange={(vendorNames) => {
+              setVendor(vendorNames.name);
+            }}
+            renderItem={rendervendor}
+          />
 
           <Input
             placeholder="BusinessName"
@@ -251,7 +254,7 @@ const NewProduct = (props) => {
             value={productName}
           />
 
-           <Input
+          <Input
             placeholder="description"
             onChangeText={(text) => setDescription(text)}
             value={description}
@@ -262,7 +265,7 @@ const NewProduct = (props) => {
             value={make}
           />
 
-           <Input
+          <Input
             placeholder="weight"
             onChangeText={(text) => setWeight(text)}
             value={weight}
@@ -273,39 +276,38 @@ const NewProduct = (props) => {
             onChangeText={(text) => setDelieveryCharge(text)}
             value={delieveryCharge}
           />
-        
+
           <Input
             placeholder="price"
             onChangeText={(text) => setPrice(text)}
             value={price}
           />
-           <View picker>
-        <Picker
-          mode="dropdown"
-          iosIcon={<Icon color={"#007aff"} name="arrow-down" />}
-          style={{ width: undefined }}
-          placeholder="Select your Category"
-          selectedValue={pickerValue}
-          placeholderStyle={{ color: "#007aff" }}
-          placeholderIconColor="#007aff"
-          onValueChange={(e) => [setPickerValue(e), setCategory(e)]}
-        >
-          {categories.map((c) => {
-            return <Picker.Item key={c.id} label={c.name} value={c.id} />;
-          })}
-        </Picker>
-      </View>
+          <View picker>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon color={"#007aff"} name="arrow-down" />}
+              style={{ width: undefined }}
+              placeholder="Select your Category"
+              selectedValue={pickerValue}
+              placeholderStyle={{ color: "#007aff" }}
+              placeholderIconColor="#007aff"
+              onValueChange={(e) => [setPickerValue(e), setCategory(e)]}
+            >
+              {categories.map((c) => {
+                return <Picker.Item key={c.id} label={c.name} value={c.id} />;
+              })}
+            </Picker>
+          </View>
           {err ? <Error message={err} /> : null}
           <View style={styles.btnm}>
-            <TouchableOpacity  onPress={() => addProduct()} style={styles.mdbtn}>
+            <TouchableOpacity onPress={() => addProduct()} style={styles.mdbtn}>
               <Text style={styles.textsm}>UpLoad</Text>
             </TouchableOpacity>
           </View>
-      
         </KeyboardAwareScrollView>
-     </View>
-  </SafeAreaView>
-  )
-}
+      </View>
+    </SafeAreaView>
+  );
+};
 
-export default NewProduct
+export default NewProduct;

@@ -13,7 +13,7 @@ const ProductCard = (props) => {
     <View style={[styles.catcontain,styles.shadowProp]}>
       <View style={{flexDirection:'row',justifyContent:"space-around"}}>
         <View style={[styles.imgpad,styles.shadowProp]}>
-            <Image source={{ uri:image }} resizeMode="center" style={styles.catimg}/>
+            <Image source={{ uri: image }} resizeMode="center" style={styles.catimg}/>
         </View>
       <View style={{margin:25}}>
         <Text style={styles.txtbrd}>{name.length > 15 ? name.substring(0, 7 - 3) + '...' : name}</Text>
@@ -23,7 +23,7 @@ const ProductCard = (props) => {
       <View style={{position:'absolute',top:-55,left:230}}>
          <Text style={styles.txtbrd}>{status}</Text>
       </View>
-      {/* <View > */}
+      <>
         <TouchableOpacity  style={styles.btnptd} onPress={() => { 
             props.addItemToCart(props.id);
             Toast.show({
@@ -37,7 +37,7 @@ const ProductCard = (props) => {
            >
           <Text style={styles.textptd}>Add</Text>
         </TouchableOpacity>
-      {/* </View> */}
+      </>
       </View>
   </View>
   )

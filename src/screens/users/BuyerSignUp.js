@@ -1,211 +1,548 @@
-import { Text,View,SafeAreaView,TouchableOpacity,Image,Platform,ScrollView} from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { Text, View, TouchableOpacity, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
-// import { getUseData, getLastUser } from "../Redux/features/userSlice";
-// import { useDispatch } from "react-redux";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthGlobal from "../../../Context/store/AuthGlobal";
+import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
-// import baseUrl from "../Redux/common/baseUrl";
- import styles from "../../shared/MainStyle";
+import baseUrl from "../../../assets/common/baseUrl";
+import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
-import { Dropdown } from "react-native-element-dropdown";
-import states from '../shared/dropdown/States';
-import lgas from '../shared/dropdown/Lga';
-import banks from '../shared/dropdown/Bank';
-import { AntDesign } from '@expo/vector-icons'; 
+import mime from "mime";
 
 const BuyerSignUp = () => {
-    const navigation = useNavigation();
-    
-    const [state, setState] = useState();
-    const [city, setCity] = useState();
-    const [cylinderWeight, setCylinderWeight] = useState();
-   
+  const context = useContext(AuthGlobal);
+  const navigation = useNavigation();
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-      };
-    
-      const offtoggleModal = () => {
-        setModalVisible(false);
-      };
-      
-       const showIdPicker = async () => {
-        const permissionResult =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (permissionResult.granted === false) {
-          alert("You've refused to allow this appp to access your photos!");
-          return;
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [password, setPassword] = useState();
+  const [role, setRole] = useState();
+  const [image, setImage] = useState();
+  const [gender, setGender] = useState();
+  const [address, setAddress] = useState();
+  const [educationalQualification, setEducationalQualification] = useState();
+  const [cylinderSize, setCylinderSize] = useState();
+  const [cylinderCertificationStatus, setCylinderCertificationStatus] =
+    useState();
+  const [cylinderAge, setCylinderAge] = useState();
+  const [hoseLineCheck, setHoseLineCheck] = useState();
+  const [cylinderSafetyCheck, setCylinderSafetyCheck] = useState();
+  const [lpgSafetyKnowledge, setLPGSafetyKnowledge] = useState();
+  const [hazardousAreaClassification, setHazardousAreaClassification] =
+    useState();
+
+  const handleCylinder = (option) => {
+    setCylinderCertificationStatus(option);
+  };
+
+  const handleCylinderAge = (option) => {
+    setCylinderAge(option);
+  };
+
+  const handleHoseLineCheck = (option) => {
+    setHoseLineCheck(option);
+  };
+
+  const handleCylinderSafetyCheck = (option) => {
+    setCylinderSafetyCheck(option);
+  };
+
+  const handleLPGSafetyKnowledge = (option) => {
+    setLPGSafetyKnowledge(option);
+  };
+
+  const handleHazardousAreaClassification = (option) => {
+    setHazardousAreaClassification(option);
+  };
+
+  const handleSubmitPress = () => {
+    const userData = new FormData();
+    const newImageUri = "file:///" + image.split("file:/").join("");
+
+    userData.append("image", {
+      uri: newImageUri,
+      type: mime.getType(newImageUri),
+      name: newImageUri.split("/").pop(),
+    });
+    userData.append("name", name);
+    userData.append("email", email);
+    userData.append("phoneNumber", phoneNumber);
+    userData.append("password", password);
+    userData.append("role", role);
+    userData.append("educationalQualification", educationalQualification);
+    userData.append("gender", gender);
+    userData.append("address", address);
+    userData.append("cylinderSize", cylinderSize);
+    userData.append("cylinderCertificationStatus", cylinderCertificationStatus);
+    userData.append("cylinderAge", cylinderAge);
+    userData.append("hoseLineCheck", hoseLineCheck);
+    userData.append("cylinderSafetyCheck", cylinderSafetyCheck);
+    userData.append("lpgSafetyKnowledge", lpgSafetyKnowledge);
+    userData.append("hazardousAreaClassification", hazardousAreaClassification);
+
+
+    //console.log("details info",userData);
+    // axios({
+    //   method: "POST",
+    //   url: `${baseUrl}users/register`,
+    //   data: JSON.stringify(userData),
+    //   headers: {
+    //     "Content-Type": "multipart/form-data; boundary=" + userData._boundary,
+    //   },
+    // })
+    axios.post(`${baseUrl}users/register`, userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((responseJson) => {
+        if (responseJson.status === 200) {
+          navigation.navigate("SignIn");
         }
-        const result = await ImagePicker.launchImageLibraryAsync();
-        if (!result.cancelled) {
-          setValidId(result.uri);
-          toggleModal();
-        }
-        };
-   
-       const renderState = (states) => {
-          return (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{states.name}</Text>
-              {states.name === states.name}
-            </View>
-          );
-        };
-    
-        const renderLga = (lgas) => {
-          return (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{lgas.name}</Text>
-              {lgas.name === lgas.name}
-            </View>
-          );
-        };
-  
-        const renderBank = (banks) => {
-          return (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{banks.name}</Text>
-              {banks.name === banks.name}
-            </View>
-          );
-        };
-  
-      async function save(key, value) {
-        await SecureStore.setItemAsync(key, value);
-      }
-    
-      const handleSubmitPress = () => {
-        if (!state) {
-          Toast.show(" state field can not be empty", Toast.LENGTH_SHORT);
-        } else if (!city) {
-          Toast.show("city field can not be empty", Toast.LENGTH_SHORT);
-          return;
-        } else if (!cylinderWeight) {
-          Toast.show("cylinderWeight field can not be empty", Toast.LENGTH_SHORT);
-          return;
-        }  else {
-          let dataToSend = {
-            state: state,
-            city: city,
-            cylinderWeight: cylinderWeight,
-            
-          };
-    
-          //API_Public.post("register", JSON.stringify(dataToSend))
-          axios({
-            method: "POST",
-            url: `${baseUrl}users/register`,
-            data: JSON.stringify(dataToSend),
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }).then((responseJson) => {
-              if (responseJson.status === 200) {
-                const accessToken = responseJson.data;
-                save("secureToken", accessToken);
-                let userdata = {
-                  email: userEmail,
-                  fullname: firstName + " " + lastName,
-                  phone: userPhone,
-                  address: userAddress,
-                  // pin: userPin,
-                  userToken: accessToken,
-                };
-                let lastUserName = {
-                  email: userEmail,
-                  fullname: firstName + " " + lastName,
-                };
-                // dispatch(getUseData(userdata));
-                // dispatch(getLastUser(lastUserName));
-    
-                navigation.navigate("MainScreen");
-              }
-            })
-            .catch((error) => {
-              Toast.show(error.message, Toast.LENGTH_SHORT);
-            });
-        }
+      })
+      .catch((error) => {
+        Toast.show(error.message, Toast.LENGTH_SHORT);
+      });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem("vendorData")
+        .then((userDetails) => {
+          if (userDetails) {
+            const user = JSON.parse(userDetails);
+            ///console.log("Information fron signUp",user)
+            setImage(user.image);
+            setName(user.name);
+            setEmail(user.email);
+            setPhoneNumber(user.phoneNumber);
+            setPassword(user.password);
+            setRole(user.role);
+          } else {
+            console.log("Object not found in AsyncStorage");
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving object:", error);
+        });
+
+      return () => {
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setPassword("");
+        setRole("");
+        setImage("");
       };
+    }, [context.stateUser.isAuthenticated])
+  );
+
   return (
-    <SafeAreaView>
-    <View>
-        <TouchableOpacity style={{left:8}} onPress={() => navigation.goBack()}>
-        <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
-        </TouchableOpacity>
-    </View>
-    <View style={{ alignSelf: "center", marginTop: 35 }}>
-           
-          <Text style={{ padding: 8,marginTop:12, fontSize: 25, fontWeight: "bold", alignSelf: "center" }}>
-            As a Vendor
+    <SafeAreaView style={styles.subContain}>
+      <View style={{ marginTop: 25 }}>
+        <View style={{ alignSelf: "center" }}>
+          <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
+            Buyer Info
           </Text>
-    </View>
-     <View style={styles.sigvw}>
-     <View style={{marginTop:15,alignSelf:'center'}}>
-          <Text style={{fontSize:20,color:'white',fontWeight:'bold'}}>Business Information</Text>
         </View>
-        <KeyboardAwareScrollView
-          extraHeight={30}
-          style={{marginTop:25}}
-        >
-        
+        <KeyboardAwareScrollView extraHeight={30} style={{ marginTop: 5 }}>
           <Input
-            placeholder="cylinderWeight"
-            onChangeText={(text) => setCitylinderWeight(text)}
-            value={cylinderWeight}
+            placeholder="Educational qualification"
+            onChangeText={(text) => setEducationalQualification(text)}
+            value={educationalQualification}
           />
-        
-         <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={states}
-          search
-          maxHeight={300}
-          labelField="name"
-          valueField="name"
-          placeholder="select state"
-          searchPlaceholder="Search..."
-          value={state}
-          onChange={(states) => {
-            setState(states.name);
-          }}
-          renderItem={renderState}
-        />
-        <Dropdown
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={lgas}
-          search
-          maxHeight={300}
-          labelField="name"
-          valueField="name"
-          placeholder="select city"
-          searchPlaceholder="Search..."
-          value={city}
-          onChange={(lgas) => {
-            setCity(lgas.name);
-          }}
-          renderItem={renderLga}
-        />
-        
+
+          <Input
+            placeholder="Gender"
+            onChangeText={(text) => setGender(text)}
+            value={gender}
+          />
+
+          <Input
+            placeholder="Address"
+            onChangeText={(text) => setAddress(text)}
+            value={address}
+          />
+
+          <Input
+            placeholder="Cylinder Size"
+            onChangeText={(text) => setCylinderSize(text)}
+            value={cylinderSize}
+          />
+
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{ label: "Cylinder Certification Status" }}
+              onValueChange={handleCylinder}
+              value={cylinderCertificationStatus}
+              items={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+            />
+          </View>
+
+          <Input
+            placeholder="Cylinder Age / Expiring Date"
+            onChangeText={(text) => setCylinderAge(text)}
+            value={cylinderAge}
+          />
+
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{ label: "Hose Line Check" }}
+              onValueChange={handleHoseLineCheck}
+              value={hoseLineCheck}
+              items={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+            />
+          </View>
+
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{ label: "Cylinder Safety Check" }}
+              onValueChange={handleCylinderSafetyCheck}
+              value={cylinderSafetyCheck}
+              items={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+            />
+          </View>
+
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{ label: "LPG Safety Knowledge" }}
+              onValueChange={handleLPGSafetyKnowledge}
+              value={lpgSafetyKnowledge}
+              items={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+            />
+          </View>
+
+          <View style={styles.dropdown}>
+            <RNPickerSelect
+              placeholder={{ label: "Hazardous Area Classification" }}
+              onValueChange={handleHazardousAreaClassification}
+              value={hazardousAreaClassification}
+              items={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+            />
+          </View>
+
           <View style={styles.btnm}>
-            <TouchableOpacity  onPress={() => handleSubmitPress()} style={styles.mdbtn}>
+            <TouchableOpacity
+              onPress={() => handleSubmitPress()}
+              style={styles.mdbtn}
+            >
               <Text style={styles.textsm}>Submit</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
-     </View>
-  </SafeAreaView>
-  )
-}
+      </View>
+    </SafeAreaView>
+  );
+};
 
-export default BuyerSignUp
+export default BuyerSignUp;
+
+// import { Text, View, TouchableOpacity, SafeAreaView } from "react-native";
+// import React, { useState, useCallback, useContext } from "react";
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// import { useNavigation, useFocusEffect } from "@react-navigation/native";
+// import Toast from "react-native-root-toast";
+// // import * as SecureStore from "expo-secure-store";
+// import axios from "axios";
+// import baseUrl from "../../../assets/common/baseUrl";
+// import styles from "../../shared/MainStyle";
+// import Input from "../../shared/Input";
+// // import { Dropdown } from "react-native-element-dropdown";
+// // import states from "../../shared/dropdown/States";
+// // import lgas from "../../shared/dropdown/Lga";
+// // import banks from '../shared/dropdown/Bank';
+// // import { AntDesign } from "@expo/vector-icons";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AuthGlobal from "../../../Context/store/AuthGlobal";
+// import RNPickerSelect from "react-native-picker-select";
+
+// const BuyerSignUp = () => {
+//   const context = useContext(AuthGlobal);
+//   const navigation = useNavigation();
+//   //const [buyerData, setBuyerData] = useState({});
+//   const [name, setName] = useState();
+//   const [email, setEmail] = useState();
+//   const [phoneNumber, setPhoneNumber] = useState();
+//   const [password, setPassword] = useState();
+//   const [role, setRole] = useState();
+//   const [image, setImage] = useState();
+//   const [gender, setGender] = useState();
+//   const [address, setAddress] = useState();
+//   const [educationalQualification, setEducationalQualification] = useState();
+//   const [cylinderSize, setCylinderSize] = useState();
+//   const [cylinderCertificationStatus, setCylinderCertificationStatus] =
+//     useState();
+//   const [cylinderAge, setCylinderAge] = useState();
+//   const [hoseLineCheck, setHoseLineCheck] = useState();
+//   const [cylinderSafetyCheck, setCylinderSafetyCheck] = useState();
+//   const [lpgSafetyknowledge, setLPGSafetyKnowledge] = useState();
+//   const [hazardousAreaClassification, setHazardousAreaClassification] =
+//     useState();
+
+//   const handleCylinder = (option) => {
+//     setCylinderCertificationStatus(option);
+//     setSelected(option);
+//   };
+
+//   const handlecylinage = (option) => {
+//     setCylinderAge(option);
+//     setSelected(option);
+//   };
+
+//   const handleLiner = (option) => {
+//     setHoseLineCheck(option);
+//     setSelected(option);
+//   };
+
+//   const handleSafe = (option) => {
+//     setCylinderSafetyCheck(option);
+//     setSelected(option);
+//   };
+
+//   const handleLpg = (option) => {
+//     setLPGSafetyKnowledge(option);
+//     setSelected(option);
+//   };
+
+//   const handleHac = (option) => {
+//     setHazardousAreaClassification(option);
+//     setSelected(option);
+//   };
+
+//   const handleSubmitPress = () => {
+//     let userData = new FormData();
+//     const newImageUri = "file:///" + image.split("file:/").join("");
+//     userData.append("image", {
+//       uri: newImageUri,
+//       type: mime.getType(newImageUri),
+//       name: newImageUri.split("/").pop(),
+//     });
+//     userData.append("name", name);
+//     userData.append("email", email);
+//     userData.append("phoneNumber", phoneNumber);
+//     userData.append("password", password);
+//     userData.append("role", role);
+//     //userData.append("vandorData",vendorData) = userData
+//     userData.append("educationalQualification", educationalQualification);
+//     userData.append("gender", gender);
+//     userData.append("address", address);
+//     userData.append("cylinderSize", cylinderSize);
+//     userData.append("cylinderCertificationStatus", cylinderCertificationStatus);
+//     userData.append("cylinderAge", cylinderAge);
+//     userData.append("hoseLineCheck", hoseLineCheck);
+//     userData.append("cylinderSafetyCheck", cylinderSafetyCheck);
+//     userData.append("lpgSafetyKnowledge", lpgSafetyKnowledge);
+//     userData.append(
+//       "harzardousAreaClassification",
+//       harzardousAreaClassification
+//     );
+
+//     // if (!state) {
+//     //   Toast.show(" state field can not be empty", Toast.LENGTH_SHORT);
+//     // } else if (!city) {
+//     //   Toast.show("city field can not be empty", Toast.LENGTH_SHORT);
+//     //   return;
+//     // } else if (!cylinderWeight) {
+//     //   Toast.show("cylinderWeight field can not be empty", Toast.LENGTH_SHORT);
+//     //   return;
+//     // }
+//     //API_Public.post("register", JSON.stringify(dataToSend))
+//     axios({
+//       method: "POST",
+//       url: `${baseUrl}users/register`,
+//       data: JSON.stringify(dataToSend),
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     })
+//       .then((responseJson) => {
+//         if (responseJson.status === 200) {
+//           // const accessToken = responseJson.data;
+//           // save("secureToken", accessToken);
+//           // let userdata = {
+//           //   email: userEmail,
+//           //   fullname: firstName + " " + lastName,
+//           //   phone: userPhone,
+//           //   address: userAddress,
+//           //   // pin: userPin,
+//           //   userToken: accessToken,
+//           // };
+//           // let lastUserName = {
+//           //   email: userEmail,
+//           //   fullname: firstName + " " + lastName,
+//           // };
+//           // dispatch(getUseData(userdata));
+//           // dispatch(getLastUser(lastUserName));
+
+//           navigation.navigate("SignIn");
+//         }
+//       })
+//       .catch((error) => {
+//         Toast.show(error.message, Toast.LENGTH_SHORT);
+//       });
+//   };
+
+//   useFocusEffect(
+//     useCallback(() => {
+//       AsyncStorage.getItem("vendorString")
+//         .then((userDetails) => {
+//           if (userDetails) {
+//             const user = JSON.parse(userDetails);
+//             // console.log("Retrieved object:", user);
+//             setImage(user.image);
+//             setName(user.name);
+//             setEmail(user.email);
+//             setPhoneNumber(user.phoneNumber);
+//             setPassword(user.password);
+//             setRole(user.role);
+//           } else {
+//             console.log("Object not found in AsyncStorage");
+//           }
+//         })
+//         .catch((error) => {
+//           console.error("Error retrieving object:", error);
+//         });
+//       return () => {
+//         setName();
+//         setEmail();
+//         setPhoneNumber();
+//         setPassword();
+//         setRole();
+//         setImage();
+//       };
+//     }, [context.stateUser.isAuthenticated])
+//   );
+//   return (
+//     <SafeAreaView style={styles.subContain}>
+//       <View style={{ marginTop: 25 }}>
+//         <View style={{ alignSelf: "center" }}>
+//           <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
+//             Buyer Info
+//           </Text>
+//         </View>
+//         <KeyboardAwareScrollView extraHeight={30} style={{ marginTop: 5 }}>
+//           <Input
+//             placeholder="Educational qualification"
+//             onChangeText={(text) => setEducationalQualification(text)}
+//             value={educationalQualification}
+//           />
+
+//           <Input
+//             placeholder="Gender"
+//             onChangeText={(text) => setGender(text)}
+//             value={gender}
+//           />
+//           <Input
+//             placeholder="address"
+//             onChangeText={(text) => setAddress(text)}
+//             value={address}
+//           />
+//           <Input
+//             placeholder="cylinderSize"
+//             onChangeText={(text) => setCylinderSize(text)}
+//             value={cylinderSize}
+//           />
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleCylinder}
+//               value={cylinderCertificationStatus}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+
+//           <Input
+//             placeholder="cylinderAge/expiringDate"
+//             onChangeText={(text) => setCylinderAge(text)}
+//             value={cylinderAge}
+//           />
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleLiner}
+//               value={hoseLineCheck}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleSafe}
+//               value={cylinderSafetyCheck}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleLpg}
+//               value={lpgSafetyknowledge}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleSafe}
+//               value={lpgSafetyKnowledge}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+//           <View style={styles.dropdown}>
+//             <RNPickerSelect
+//               onValueChange={handleHac}
+//               value={hazardousAreaClassification}
+//               items={[
+//                 { label: "Yes", value: "yes" },
+//                 { label: "No", value: "no" },
+//               ]}
+//             />
+//           </View>
+
+//           <View style={styles.btnm}>
+//             <TouchableOpacity
+//               onPress={() => handleSubmitPress()}
+//               style={styles.mdbtn}
+//             >
+//               <Text style={styles.textsm}>Submit</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </KeyboardAwareScrollView>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// export default BuyerSignUp;
