@@ -144,7 +144,7 @@ const BuyerSignUp = () => {
   return (
     <SafeAreaView style={styles.subContain}>
       <View style={{ marginTop: 25 }}>
-        <View style={{ alignSelf: "center" }}>
+        <View style={{ alignSelf: "center",marginTop:20 }}>
           <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
             Buyer Info
           </Text>

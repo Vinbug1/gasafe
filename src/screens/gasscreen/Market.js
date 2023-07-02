@@ -106,14 +106,6 @@ const ListItem = () => {
         >
           <AntDesign name="leftcircleo" size={28} color="#2ED1C0" />
         </TouchableOpacity>
-        {/* <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            //alignSelf: "center",
-           // marginRight: 10,
-          }}
-        > */}
           <Text style={styles.headtxt}>Gasafe</Text>
           <Fontisto
             name="shopping-store"

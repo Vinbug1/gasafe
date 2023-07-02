@@ -43,7 +43,7 @@ const VendorSignUp = () => {
   const [facilityCertificationStatus, setFacilityCertificationStatus] =
     useState();
   const [leakDetectionSystem, setLeakDetectionSystem] = useState();
-  const [emergencyresponseStatus, setEmergencyResponseStatus] = useState();
+  const [emergencyResponseStatus, setEmergencyResponseStatus] = useState();
   const [staffTraing, setStaffTraining] = useState();
   const [riskAssessmentAwarenessStatus, setRiskAssessmentAwarenessStatus] =
     useState();
@@ -136,7 +136,7 @@ const VendorSignUp = () => {
     userData.append("accountNumber", accountNumber);
     userData.append("facilityCertificationStatus", facilityCertificationStatus);
     userData.append("leakDetectionSystem", leakDetectionSystem);
-    userData.append("emergencyresponseStatus", emergencyresponseStatus);
+    userData.append("emergencyResponseStatus", emergencyResponseStatus);
     userData.append("staffTraing", staffTraing);
     userData.append(
       "riskAssessmentAwarenessStatus",
@@ -276,7 +276,7 @@ const VendorSignUp = () => {
           <RNPickerSelect
             onValueChange={handleERS}
             placeholder={{ label: "Emergency response status" }}
-            value={emergencyresponseStatus}
+            value={emergencyResponseStatus}
             items={[
               { label: "Yes", value: "yes" },
               { label: "No", value: "no" },

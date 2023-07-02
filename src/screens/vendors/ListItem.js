@@ -149,48 +149,48 @@ const ListItem = () => {
     }
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     AsyncStorage.getItem("jwt").then((tkn) => {
-  //         //console.log("checkening token",tkn);
-  //         axios({
-  //           method: "GET",
-  //           url: `${baseUrl}products/user/${userId}`,
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: "Bearer " + tkn,
-  //           },
-  //         }).then((res) => {
-  //             setLoading(false);
-  //             setProductsFiltered(res.data);
-  //             setProducts(res.data);
-  //           }).catch((error) => {
-  //             Toast.show(error.message, Toast.SHORT);
-  //           });
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem("jwt").then((tkn) => {
+          //console.log("checkening token",tkn);
+          axios({
+            method: "GET",
+            url: `${baseUrl}products/user/${userId}`,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + tkn,
+            },
+          }).then((res) => {
+              setLoading(false);
+              setProductsFiltered(res.data);
+              setProducts(res.data);
+            }).catch((error) => {
+              Toast.show(error.message, Toast.SHORT);
+            });
 
-  //         // axios({
-  //         //   method: "GET",
-  //         //   url: `${baseUrl}orders`,
-  //         //   headers: {
-  //         //     "Content-Type": "application/json",
-  //         //     Authorization: "Bearer " + tkn,
-  //         //   },
-  //         // }).then((res) => {
-  //         //     setLoading(false);
-  //         //     setOrders(res.data);
-  //         //   }).catch((error) => {  Toast.show(error.message, Toast.SHORT); });
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error retrieving JWT token:", error);
-  //       });
+          // axios({
+          //   method: "GET",
+          //   url: `${baseUrl}orders`,
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Authorization: "Bearer " + tkn,
+          //   },
+          // }).then((res) => {
+          //     setLoading(false);
+          //     setOrders(res.data);
+          //   }).catch((error) => {  Toast.show(error.message, Toast.SHORT); });
+        })
+        .catch((error) => {
+          console.error("Error retrieving JWT token:", error);
+        });
 
-  //     return () => {
-  //       setProducts([]);
-  //      // setOrders([]);
-  //       setProductsFiltered([]);
-  //     };
-  //   },[baseUrl, userId, setLoading, setProductsFiltered, setProducts, setOrders])
-  // );
+      return () => {
+        setProducts([]);
+       // setOrders([]);
+        setProductsFiltered([]);
+      };
+    },[baseUrl, userId, setLoading, setProductsFiltered, setProducts, setOrders])
+  );
 
   useFocusEffect(
     useCallback(() => {

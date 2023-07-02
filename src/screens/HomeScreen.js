@@ -35,7 +35,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#2ED1C0", height: "100%" }}>
       {/* <View style={styles.header} /> */}
-      <View style={{ marginTop: Platform.OS === "ios" ? 15 : 25 }}>
+      <View style={{ marginTop: Platform.OS === "ios" ? 15 : 30 }}>
         <AccountCard userDetails={userDetails} />
         <View style={{ backgroundColor: "white", height: "100%" }}>
           <CardBody />

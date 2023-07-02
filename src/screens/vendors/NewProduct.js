@@ -42,9 +42,7 @@ const NewProduct = (props) => {
       </View>
     );
   };
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  
 
   useEffect(() => {
     AsyncStorage.getItem("jwt")
@@ -73,20 +71,41 @@ const NewProduct = (props) => {
       setVendorNames([]);
     };
   }, []);
-
   const pickImage = async () => {
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+  
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-
+  
     if (!result.cancelled) {
       setMainImage(result.uri);
       setImage(result.uri);
     }
   };
+  
+
+  // const pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
+
+  //   if (!result.cancelled) {
+  //     setMainImage(result.uri);
+  //     setImage(result.uri);
+  //   }
+  // };
 
   const addProduct = () => {
     if (

@@ -10,7 +10,7 @@ const VendorCard = (props) => {
       <Image
         style={styles.imag}
         resizeMode="cover"
-        source={image ? { uri: image } : null}
+        source={{uri: image }}
       />
       <View style={{ marginTop: 16 }}>
         <Text style={styles.title}>

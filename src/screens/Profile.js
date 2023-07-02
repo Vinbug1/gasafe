@@ -1,14 +1,39 @@
 import React, { useContext, useState, useCallback } from "react";
-import { View, Text, SafeAreaView, TouchableOpacity, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { logoutUser } from "../../Context/actions/Auth.actions";
 import styles from "../shared/MainStyle";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
   const context = useContext(AuthGlobal);
+  const navigation = useNavigation();
   const [userProfile, setUserProfile] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [address, setAddress] = useState();
+  const [role, setRole] = useState();
+  const [image, setImage] = useState();
+
+
+  const lockoutUser = () => {
+    AsyncStorage.removeItem("jwt");
+    logoutUser(context.dispatch).then(() => {
+      navigation.navigate("SignIn");
+    });
+  };
+  
+
 
   useFocusEffect(
     useCallback(() => {
@@ -16,8 +41,14 @@ const Profile = () => {
         .then((userDetails) => {
           if (userDetails) {
             const user = JSON.parse(userDetails);
-            //console.log("Retrieved object:", user);
-            setUserProfile(user);
+            console.log("Retrieved object:", user);
+            //setUserProfile(user);
+            setImage(user.image);
+            setName(user.name);
+            setEmail(user.email);
+            setPhoneNumber(user.phone);
+            setAddress(user.address);
+            setRole(user.role);
           } else {
             console.log("Object not found in AsyncStorage");
           }
@@ -33,8 +64,14 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#FFFFFF", height: "90%" }}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between",marginTop:Platform.OS ==='ios' ? 0 : 35}}>
-      <View style={[styles.header, styles.shadowProp]}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: Platform.OS === "ios" ? 0 : 35,
+        }}
+      >
+        <View style={[styles.header, styles.shadowProp]}>
           <View
             style={{
               flexDirection: "row",
@@ -42,12 +79,15 @@ const Profile = () => {
               //marginLeft: 120,
             }}
           >
-            <Text style={styles.headt}>{userProfile?.name}</Text>
+            <Text style={styles.headt}>{name}</Text>
           </View>
         </View>
 
         <View style={[styles.header, styles.shadowProp]}>
-          <TouchableOpacity style={{ right: 5 }} onPress={() => logoutUser(context.dispatch)}>
+          <TouchableOpacity
+            style={{ right: 5 }}
+            onPress={() => lockoutUser}
+          >
             <Text style={styles.headt}>LogOut</Text>
           </TouchableOpacity>
         </View>
@@ -55,22 +95,25 @@ const Profile = () => {
       <View style={styles.detailbg}>
         <View style={{ flexDirection: "row" }}>
           <Image
-            source={{ uri: userProfile?.image }}
+            source={{ uri: image }}
             resizeMode="cover"
             style={styles.imagdat}
           />
           <View style={{ marginTop: 40 }}>
             <View style={styles.cardet}>
-              <Text style={styles.title}>{userProfile?.name}</Text>
+              <Text style={styles.title}>{name}</Text>
             </View>
             <View style={styles.cardet}>
-              <Text style={styles.title}>{userProfile?.phone}</Text>
+              <Text style={styles.title}>{phoneNumber}</Text>
             </View>
             <View style={styles.cardet}>
-              <Text style={styles.title}>{userProfile?.role}</Text>
+              <Text style={styles.title}>{email}</Text>
             </View>
             <View style={styles.cardet}>
-              <Text style={styles.title}>{userProfile?.address}</Text>
+              <Text style={styles.title}>{role}</Text>
+            </View>
+            <View style={styles.cardet}>
+              <Text style={styles.title}>{address}</Text>
             </View>
           </View>
         </View>
@@ -101,9 +144,6 @@ const Profile = () => {
 
 export default Profile;
 
-
-
-
 // import React, { useContext, useState, useCallback } from "react";
 // import { View, Text,SafeAreaView,TouchableOpacity,Image } from "react-native";
 // import { useFocusEffect } from "@react-navigation/native";
@@ -111,7 +151,6 @@ export default Profile;
 // import AuthGlobal from "../../Context/store/AuthGlobal";
 // import { logoutUser } from "../../Context/actions/Auth.actions";
 // import styles from "../shared/MainStyle";
-
 
 // const Profile = ()=>{
 //   const context = useContext(AuthGlobal);

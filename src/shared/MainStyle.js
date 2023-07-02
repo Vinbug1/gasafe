@@ -22,7 +22,7 @@ module.exports = StyleSheet.create({
   subContain: {
   flex: 1,
    // marginTop: 35,
-    height: responsiveHeight("100%"),
+    height: responsiveHeight("80%"),
     backgroundColor: "#2ED1C0",
     //paddingBottom: 15,
   },
@@ -129,7 +129,6 @@ module.exports = StyleSheet.create({
   },
   sigw: {
     height: "250%",
-
     backgroundColor: "#2ED1C0",
     //borderTopRightRadius:8,
     // borderTopLeftRadius:8,
@@ -404,9 +403,10 @@ module.exports = StyleSheet.create({
   },
   catimg: {
     width: "90%",
-    height: 145,
+    height:118,
     borderRadius: 5,
     alignSelf: "center",
+    padding: 9,
   },
   catcontain: {
     backgroundColor: "#2ED1C0",
@@ -511,7 +511,7 @@ module.exports = StyleSheet.create({
     fontSize: 18,
     color: "orange",
     //marginTop: 5,
-    textAlign: "flex-start",
+    textAlign: "right",
     padding: 3,
   },
   listContainer: {
@@ -646,11 +646,9 @@ module.exports = StyleSheet.create({
     width: 130,
     height: 130,
     borderRadius: 130 / 2,
-    overflow: "hidden",
     borderWidth: 1,
-    borderColor: "transparent",
-    margin: 12,
-    // alignSelf:"center",
+     borderColor: "#FFFFFF",
+    margin: 28,
   },
 
   detailbg: {
@@ -663,7 +661,7 @@ module.exports = StyleSheet.create({
   catcont: {
     backgroundColor: "#2ED1C0",
     width: "90%",
-    height: 135,
+    height: 170,
     //alignItems: "center",
     alignSelf: "center",
     borderRadius: 5,
@@ -805,13 +803,15 @@ module.exports = StyleSheet.create({
   buttonText: {
     color: "white",
   },
-  imageContainer: {
+  imageContain: {
     width: 200,
     height: 200,
     borderStyle: "solid",
-    borderWidth: 8,
-    padding: 0,
-    justifyContent: "center",
+    borderWidth: 1,
+    padding: 5,
+   // justifyContent: "center",
+     alignItems: "center",
+    // marginVertical: 20,
     borderRadius: 100,
     borderColor: "#E0E0E0",
     elevation: 10,
@@ -911,7 +911,7 @@ module.exports = StyleSheet.create({
     height: 130,
     borderStyle: "solid",
     borderWidth: 1,
-    padding: 0,
+    margin: 12,
     justifyContent: "center",
     borderRadius: 100,
     borderColor: "#FFFFFF",
@@ -923,9 +923,9 @@ module.exports = StyleSheet.create({
     marginTop: 10,
   },
   imagejv: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
   },
   imagejp: {
     width: "100%",
@@ -934,7 +934,7 @@ module.exports = StyleSheet.create({
   },
   imagePicker: {
     position: "absolute",
-    right: 5,
+    right: -25,
     bottom: 5,
     backgroundColor: "grey",
     padding: 8,
@@ -943,8 +943,10 @@ module.exports = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
+    justifyContent: "space-between",
     backgroundColor: "#ffff",
-    height: Platform.OS === "ios" ? 50 : 65,
+    marginTop: Platform.OS === "ios" ? 10 : 25,
+    marginBottom: Platform.OS === "ios" ? 5 :9
   },
   fab: {
     top: 405,
