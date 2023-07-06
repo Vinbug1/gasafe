@@ -5,12 +5,17 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthGlobal from "../../../Context/store/AuthGlobal";
-import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
 import baseUrl from "../../../assets/common/baseUrl";
 import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
 import mime from "mime";
+import hlcs from "../../shared/dropdown/Hlc";
+import ccs from "../../shared/dropdown/Ccs";
+import csc from "../../shared/dropdown/Csc";
+import lpgsks from "../../shared/dropdown/Lpgsk";
+import hzcs from "../../shared/dropdown/Hzc";
+import { Dropdown } from "react-native-element-dropdown";
 
 const BuyerSignUp = () => {
   const context = useContext(AuthGlobal);
@@ -35,28 +40,48 @@ const BuyerSignUp = () => {
   const [hazardousAreaClassification, setHazardousAreaClassification] =
     useState();
 
-  const handleCylinder = (option) => {
-    setCylinderCertificationStatus(option);
+  const renderHlc = (hlcs) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{hlcs.name}</Text>
+        {hlcs.name === hlcs.name}
+      </View>
+    );
   };
 
-  const handleCylinderAge = (option) => {
-    setCylinderAge(option);
+  const renderCcs = (ccs) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{ccs.name}</Text>
+        {ccs.name === ccs.name}
+      </View>
+    );
   };
 
-  const handleHoseLineCheck = (option) => {
-    setHoseLineCheck(option);
+  const renderCsc = (csc) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{csc.name}</Text>
+        {csc.name === csc.name}
+      </View>
+    );
   };
-
-  const handleCylinderSafetyCheck = (option) => {
-    setCylinderSafetyCheck(option);
+  
+  const renderLpghsks = (lpgsks) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{lpgsks.name}</Text>
+        {lpgsks.name === lpgsks.name}
+      </View>
+    );
   };
-
-  const handleLPGSafetyKnowledge = (option) => {
-    setLPGSafetyKnowledge(option);
-  };
-
-  const handleHazardousAreaClassification = (option) => {
-    setHazardousAreaClassification(option);
+  const renderHzc = (hzcs) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{hzcs.name}</Text>
+        {hzcs.name === hzcs.name}
+      </View>
+    );
   };
 
   const handleSubmitPress = () => {
@@ -84,7 +109,6 @@ const BuyerSignUp = () => {
     userData.append("lpgSafetyKnowledge", lpgSafetyKnowledge);
     userData.append("hazardousAreaClassification", hazardousAreaClassification);
 
-
     //console.log("details info",userData);
     // axios({
     //   method: "POST",
@@ -94,7 +118,8 @@ const BuyerSignUp = () => {
     //     "Content-Type": "multipart/form-data; boundary=" + userData._boundary,
     //   },
     // })
-    axios.post(`${baseUrl}users/register`, userData, {
+    axios
+      .post(`${baseUrl}users/register`, userData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -144,7 +169,7 @@ const BuyerSignUp = () => {
   return (
     <SafeAreaView style={styles.subContain}>
       <View style={{ marginTop: 25 }}>
-        <View style={{ alignSelf: "center",marginTop:20 }}>
+        <View style={{ alignSelf: "center", marginTop: 20 }}>
           <Text style={{ fontSize: 20, color: "white", fontWeight: "bold" }}>
             Buyer Info
           </Text>
@@ -174,17 +199,25 @@ const BuyerSignUp = () => {
             value={cylinderSize}
           />
 
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{ label: "Cylinder Certification Status" }}
-              onValueChange={handleCylinder}
-              value={cylinderCertificationStatus}
-              items={[
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-              ]}
-            />
-          </View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={ccs}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="cylinder satification"
+            searchPlaceholder="Search..."
+            value={cylinderCertificationStatus}
+            onChange={(ccs) => {
+              setCylinderCertificationStatus(ccs.name);
+            }}
+            renderItem={renderCcs}
+          />
 
           <Input
             placeholder="Cylinder Age / Expiring Date"
@@ -192,53 +225,85 @@ const BuyerSignUp = () => {
             value={cylinderAge}
           />
 
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{ label: "Hose Line Check" }}
-              onValueChange={handleHoseLineCheck}
-              value={hoseLineCheck}
-              items={[
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-              ]}
-            />
-          </View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={hlcs}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="Hose line Check "
+            searchPlaceholder="Search..."
+            value={hoseLineCheck}
+            onChange={(hlcs) => {
+              setHoseLineCheck(hlcs.name);
+            }}
+            renderItem={renderHlc}
+          />
 
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{ label: "Cylinder Safety Check" }}
-              onValueChange={handleCylinderSafetyCheck}
-              value={cylinderSafetyCheck}
-              items={[
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-              ]}
-            />
-          </View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={csc}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="Safety check "
+            searchPlaceholder="Search..."
+            value={cylinderSafetyCheck}
+            onChange={(csc) => {
+              setCylinderSafetyCheck(csc.name);
+            }}
+            renderItem={renderCsc}
+          />
 
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{ label: "LPG Safety Knowledge" }}
-              onValueChange={handleLPGSafetyKnowledge}
-              value={lpgSafetyKnowledge}
-              items={[
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-              ]}
-            />
-          </View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={lpgsks}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="Safety Knowledge"
+            searchPlaceholder="Search..."
+            value={lpgSafetyKnowledge}
+            onChange={(lpgsks) => {
+              setLPGSafetyKnowledge(lpgsks.name);
+            }}
+            renderItem={renderLpghsks}
+          />
 
-          <View style={styles.dropdown}>
-            <RNPickerSelect
-              placeholder={{ label: "Hazardous Area Classification" }}
-              onValueChange={handleHazardousAreaClassification}
-              value={hazardousAreaClassification}
-              items={[
-                { label: "Yes", value: "yes" },
-                { label: "No", value: "no" },
-              ]}
-            />
-          </View>
+          <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={hzcs}
+            search
+            maxHeight={300}
+            labelField="name"
+            valueField="name"
+            placeholder="Hazard Certifcation"
+            searchPlaceholder="Search..."
+            value={hazardousAreaClassification}
+            onChange={(hzcs) => {
+              setHazardousAreaClassification(hzcs.name);
+            }}
+            renderItem={renderHzc}
+          />
 
           <View style={styles.btnm}>
             <TouchableOpacity

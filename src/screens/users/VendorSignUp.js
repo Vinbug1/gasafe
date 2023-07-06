@@ -1,25 +1,30 @@
-import {
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import React, { useState, useRef, useCallback, useContext } from "react";
+import { Text, View,SafeAreaView,TouchableOpacity } from "react-native";
+import React, { useState, useCallback, useContext } from "react";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
 import axios from "axios";
 import baseUrl from "../../../assets/common/baseUrl";
 import styles from "../../shared/MainStyle";
 import mime from "mime";
-import RNPickerSelect from "react-native-picker-select";
 import AuthGlobal from "../../../Context/store/AuthGlobal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import qs from "qs";
+import cmks from "../../shared/dropdown/Cmk";
+import ers from "../../shared/dropdown/Ers";
+import fcs from "../../shared/dropdown/Fc";
+import ras from "../../shared/dropdown/Raas";
+import hsps from "../../shared/dropdown/Hsp";
+import hzcs from "../../shared/dropdown/Hzc";
+import lds from "../../shared/dropdown/Lds";
+import lpghk from "../../shared/dropdown/Lpghk";
+import lpghp from "../../shared/dropdown/Lpghp";
+import rcf from "../../shared/dropdown/Rcf";
+import st from "../../shared/dropdown/St";
+import { Dropdown } from "react-native-element-dropdown";
+
 
 const VendorSignUp = () => {
   const navigation = useNavigation();
-  const scrollViewRef = useRef(null);
+  //const scrollViewRef = useRef(null);
   const context = useContext(AuthGlobal);
   const [selectedOption, setSelectedOption] = useState("");
   const [selected, setSelected] = useState("");
@@ -48,69 +53,105 @@ const VendorSignUp = () => {
   const [riskAssessmentAwarenessStatus, setRiskAssessmentAwarenessStatus] =
     useState();
   const [riskControlFramework, setRiskControlFramework] = useState();
-  const [hsepolicy, setHSEPolicy] = useState();
+  const [hsePolicy, setHSEPolicy] = useState();
   const [lPGHazardsKnowledge, setLPGHazardsKnowledge] = useState();
   const [lPGHandlingProcedure, setLPGHandlingProcedure] = useState();
   const [cylinderManagementKnowledge, setCylinderManagementKnowledge] =
     useState();
   const [hazardousAreaClassification, setHazardousAreaClassification] =
     useState();
-  //const [vendorData, setVendorData] = useState();
-
-  // const handleOptionChange = (option) => {
-  //      setRole(option)
-  //     setSelectedOption(option);
-  //     );
-  //   };
-  const handleFCS = (option) => {
-    setFacilityCertificationStatus(option);
-    setSelected(option);
-    // setShowAdditionalFields(option === "valid");
+  
+  const renderCmk= (cmks) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{cmks.name}</Text>
+        {cmks.name === cmks.name}
+      </View>
+    );
   };
-  const handleLDC = (option) => {
-    setLeakDetectionSystem(option);
-    setSelected(option);
+  const renderErs = (ers) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{ers.name}</Text>
+        {ers.name === ers.name}
+      </View>
+    );
   };
-  const handleERS = (option) => {
-    setEmergencyResponseStatus(option);
-    setSelected(option);
+  const renderFc = (fcs) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{fcs.name}</Text>
+        {fcs.name === fcs.name}
+      </View>
+    );
   };
-  const handleST = (option) => {
-    setStaffTraining(option);
-    setSelected(option);
+  const renderHsp = (hsps) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{hsps.name}</Text>
+        {hsps.name === hsps.name}
+      </View>
+    );
   };
-  const handleRAAS = (option) => {
-    setRiskAssessmentAwarenessStatus(option);
-    setSelected(option);
-  };
-  const handleRCF = (option) => {
-    setRiskControlFramework(option);
-    setSelected(option);
-  };
-  const handleHsep = (option) => {
-    setHSEPolicy(option);
-    setSelected(option);
-  };
-  const handlePGHP = (option) => {
-    setLPGHandlingProcedure(option);
-    setSelected(option);
-  };
-  const handleCMK = (option) => {
-    setCylinderManagementKnowledge(option);
-    setSelected(option);
-  };
-  const handleHAC = (option) => {
-    setHazardousAreaClassification(option);
-    setSelected(option);
-  };
-  const handleLPGHK = (option) => {
-    setLPGHazardsKnowledge(option);
-    setSelected(option);
+  const renderHzc = (hzcs) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{hzcs.name}</Text>
+        {hzcs.name === hzcs.name}
+      </View>
+    );
   };
 
-  // const scrollToBottom = () => {
-  //   scrollViewRef.current.scrollToEnd({ animated: true });
-  // };
+  const renderLds = (lds) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{lds.name}</Text>
+        {lds.name === lds.name}
+      </View>
+    );
+  };
+  const renderLpghk = (lpghk) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{lpghk.name}</Text>
+        {lpghk.name === lpghk.name}
+      </View>
+    );
+  };
+  const renderLpghp = (lpghp) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{lpghp.name}</Text>
+        {lpghp.name === lpghp.name}
+      </View>
+    );
+  };
+  const renderRcf = (rcf) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{rcf.name}</Text>
+        {rcf.name === rcf.name}
+      </View>
+    );
+  };
+ 
+  const renderSt = (st) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{st.name}</Text>
+        {st.name === st.name}
+      </View>
+    );
+  };
+  const renderRaas = (ras) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{ras.name}</Text>
+        {ras.name === ras.name}
+      </View>
+    );
+  };
+
   const register = () => {
     let userData = new FormData();
     const newImageUri = "file:///" + image.split("file:/").join("");
@@ -143,7 +184,7 @@ const VendorSignUp = () => {
       riskAssessmentAwarenessStatus
     );
     userData.append("riskControlFramework", riskControlFramework);
-    userData.append("hsepolicy", hsepolicy);
+    userData.append("hsePolicy", hsePolicy);
     userData.append("lPGHazardsKnowledge", lPGHazardsKnowledge);
     userData.append("cylinderManagementKnowledge", cylinderManagementKnowledge);
     userData.append("hazardousAreaClassification", hazardousAreaClassification);
@@ -244,133 +285,225 @@ const VendorSignUp = () => {
 
   return (
     <SafeAreaView style={styles.subContain}>
-      {/* <ScrollView
-        ref={scrollViewRef}
-        showsVerticalScrollIndicator={false}
-        //onContentSizeChange={() => scrollToBottom()}
-      > */}
+      
       <View style={{ marginTop: 35 }}>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            placeholder={{ label: "Facility Certificate" }}
-            onValueChange={handleFCS}
-            value={facilityCertificationStatus}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            placeholder={{ label: "Leak detection system" }}
-            onValueChange={handleLDC}
-            value={leakDetectionSystem}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleERS}
-            placeholder={{ label: "Emergency response status" }}
-            value={emergencyResponseStatus}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleST}
-            placeholder={{ label: "Staff training" }}
-            value={staffTraing}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleRAAS}
-            placeholder={{ label: "Risk Assessement" }}
-            value={riskAssessmentAwarenessStatus}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleRCF}
-            placeholder={{ label: "Risk Control Framework" }}
-            value={riskControlFramework}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleHsep}
-            placeholder={{ label: "Hse policy" }}
-            value={hsepolicy}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handlePGHP}
-            placeholder={{ label: "Lpg Handling procedure" }}
-            value={lPGHandlingProcedure}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleCMK}
-            placeholder={{ label: "Cylinder Management Knowledge" }}
-            value={cylinderManagementKnowledge}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleHAC}
-            placeholder={{ label: "Hazard Controle" }}
-            value={hazardousAreaClassification}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
-        <View style={styles.dropdown}>
-          <RNPickerSelect
-            onValueChange={handleLPGHK}
-            placeholder={{ label: "Lpg hazards Knowledge" }}
-            value={lPGHazardsKnowledge}
-            items={[
-              { label: "Yes", value: "yes" },
-              { label: "No", value: "no" },
-            ]}
-          />
-        </View>
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={cmks}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Selected role"
+          searchPlaceholder="Search..."
+          value={cylinderManagementKnowledge}
+          onChange={(cmks) => {
+            setCylinderManagementKnowledge(cmks.name);
+          }}
+          renderItem={renderCmk}
+        />
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={fcs}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Selected facility Certificate"
+          searchPlaceholder="Search..."
+          value={facilityCertificationStatus}
+          onChange={(fcs) => {
+            setFacilityCertificationStatus(fcs.name);
+          }}
+          renderItem={renderFc}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={lds}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Selected leak detecting"
+          searchPlaceholder="Search..."
+          value={leakDetectionSystem}
+          onChange={(lds) => {
+            setLeakDetectionSystem(lds.name);
+          }}
+          renderItem={renderLds}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={ers}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Selected Emergency Response"
+          searchPlaceholder="Search..."
+          value={emergencyResponseStatus}
+          onChange={(ers) => {
+            setEmergencyResponseStatus(ers.name);
+          }}
+          renderItem={renderErs}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={st}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Are your staff trained "
+          searchPlaceholder="Search..."
+          value={staffTraing}
+          onChange={(st) => {
+            setStaffTraining(st.name);
+          }}
+          renderItem={renderSt}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={rcf}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Risk control Framework"
+          searchPlaceholder="Search..."
+          value={riskControlFramework}
+          onChange={(rcf) => {
+            setRiskControlFramework(rcf.name);
+          }}
+          renderItem={renderRcf}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={ras}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Risk Asse"
+          searchPlaceholder="Search..."
+          value={riskAssessmentAwarenessStatus}
+          onChange={(ras) => {
+            setRiskAssessmentAwarenessStatus(ras.name);
+          }}
+          renderItem={renderRaas}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={hsps}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder=" Do you have Hse policy"
+          searchPlaceholder="Search..."
+          value={hsePolicy}
+          onChange={(hsps) => {
+            setHSEPolicy(hsps.name);
+          }}
+          renderItem={renderHsp}
+        />
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={lpghp}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="do you have Lpghp installed"
+          searchPlaceholder="Search..."
+          value={lPGHandlingProcedure}
+          onChange={(lpghp) => {
+            setLPGHandlingProcedure(lpghp.name);
+          }}
+          renderItem={renderLpghp}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={hzcs}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder=" Hazard Area classification"
+          searchPlaceholder="Search..."
+          value={hazardousAreaClassification}
+          onChange={(hzcs) => {
+            setHazardousAreaClassification(hzcs.name);
+          }}
+          renderItem={renderHzc}
+        />
+
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={lpghk}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Lpg Hazard Knowledge"
+          searchPlaceholder="Search..."
+          value={lPGHazardsKnowledge}
+          onChange={(lpghk) => {
+            setLPGHazardsKnowledge(lpghk.name);
+          }}
+          renderItem={renderLpghk}
+        />
 
         <View style={styles.btnm}>
           <TouchableOpacity

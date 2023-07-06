@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import {
   Text,
@@ -6,16 +5,15 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import RNPickerSelect from "react-native-picker-select";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../../shared/MainStyle";
 import Input from "../../shared/Input";
 import { FontAwesome } from "@expo/vector-icons";
-
+import { Dropdown } from "react-native-element-dropdown";
+import roles from "../../shared/dropdown/Role";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -43,17 +41,26 @@ const SignUp = () => {
     }
   };
 
-  const handleOptionChange = (option) => {
-    setRole(option);
-    setSelectedOption(option);
-  };
+  // const handleOptionChange = (option) => {
+  //   setRole(option);
+  //   setSelectedOption(option);
+  // };
 
-  const scrollToBottom = () => {
-    scrollViewRef.current.scrollToEnd({ animated: true });
-  };
+  // const scrollToBottom = () => {
+  //   scrollViewRef.current.scrollToEnd({ animated: true });
+  // };
 
   const register = async () => {
-    if ( email === "" ||name === "" ||phoneNumber === "" ||password === "" ||role === "" ) { setError("Please fill in the form correctly"); return; }
+    if (
+      email === "" ||
+      name === "" ||
+      phoneNumber === "" ||
+      password === "" ||
+      role === ""
+    ) {
+      setError("Please fill in the form correctly");
+      return;
+    }
 
     let vendorData = {
       image: image,
@@ -64,31 +71,35 @@ const SignUp = () => {
       role: role,
     };
     await AsyncStorage.setItem("vendorData", JSON.stringify(vendorData));
-    if (role !== "vendor") {
+    if (role !== "Vendor") {
       navigation.navigate("BuyerScreen");
     } else {
       navigation.navigate("BankScreen");
     }
     scrollViewRef.current.scrollToEnd({ animated: true });
   };
+  const renderRole = (roles) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.textItem}>{roles.name}</Text>
+        {roles.name === roles.name}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.subContain}>
-      <View style={{ alignSelf: "center",marginTop:75 }}>
+      <View style={{ alignSelf: "center", marginTop: 75 }}>
         <Text style={{ fontSize: 16, alignSelf: "center", color: "#FFFFFF" }}>
           Hello dear,
         </Text>
         <Text style={styles.signtxt}> Welcome to Gasafe</Text>
       </View>
-      <ScrollView
-        ref={scrollViewRef}
-        showsVerticalScrollIndicator={false}
-        onContentSizeChange={() => scrollToBottom()}
-      >
+      <View>
         <View style={styles.imageContainer}>
           <Image style={styles.imagejv} source={{ uri: mainImage }} />
           <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
-                 <FontAwesome name="camera" size={24} color="#D12E3F" />
+            <FontAwesome name="camera" size={24} color="#D12E3F" />
           </TouchableOpacity>
         </View>
 
@@ -117,7 +128,27 @@ const SignUp = () => {
           secureTextEntry={true}
         />
 
-        <View style={styles.dropdown}>
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={roles}
+          search
+          maxHeight={300}
+          labelField="name"
+          valueField="name"
+          placeholder="Selected role"
+          searchPlaceholder="Search..."
+          value={role}
+          onChange={(roles) => {
+            setRole(roles.name);
+          }}
+          renderItem={renderRole}
+        />
+
+        {/* <View style={styles.dropdown}>
           <RNPickerSelect
             onValueChange={handleOptionChange}
             value={selectedOption}
@@ -126,7 +157,7 @@ const SignUp = () => {
               { label: "buyer", value: "buyer" },
             ]}
           />
-        </View>
+        </View> */}
         <View style={styles.btnm}>
           <TouchableOpacity onPress={register} style={styles.mdbtn}>
             <Text style={styles.textsm}>Processed</Text>
@@ -135,12 +166,8 @@ const SignUp = () => {
 
         <View>
           <TouchableOpacity
-            style={{
-              alignSelf: "center",
-              marginTop: 10,
-              flexDirection: "row",
-            }}
-            onPress={() => navigation.navigate('SignIn')}
+            style={{ alignSelf: "center", marginTop: 10, flexDirection: "row" }}
+            onPress={() => navigation.navigate("SignIn")}
           >
             <Text style={{ color: "white", fontSize: 14 }}>
               Have an account already?:
@@ -152,7 +179,7 @@ const SignUp = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

@@ -8,6 +8,7 @@ import VendorSignUp from "../screens/users/VendorSignUp";
 import Verification from "../screens/users/Verification";
 import ForgetPassword from "../screens/users/ForgetPassword";
 import VendorBank from "../screens/users/VendorBank";
+// import SignUpUser from "../screens/users/SignUpUser";
 
 const Stack = createNativeStackNavigator();
 const UserNavigation = () => {
@@ -31,6 +32,11 @@ const UserNavigation = () => {
         component={SignUp}
         options={{ headerShown: false }}
       />
+      {/* <Stack.Screen
+        name="SignUpUser"
+        component={SignUpUser}
+        options={{ headerShown: false }}
+      /> */}
       <Stack.Screen
         name="BuyerScreen"
         component={BuyerSignUp}
